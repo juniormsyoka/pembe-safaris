@@ -1,0 +1,25 @@
+{
+  "safaris": [
+    {
+      "id": "1",
+      "title": "Maasai Mara Great Migration",
+      "slug": "maasai-mara-great-migration",
+      "location": "Maasai Mara National Reserve",
+      "duration": "7 Days",
+      "groupSize": "2-8 people",
+      "price": 2850,
+      "rating": 4.9,
+      "reviews": 128,
+      "image": "/images/safaris/mara-migration.jpg",
+      "badge": "Best Seller",
+      "description": "Witness the greatest wildlife spectacle on earth - the Great Migration. Millions of wildebeest, zebras, and gazelles cross the Mara River in search of fresh grazing.",
+      "highlights": [
+        "River crossing viewing",
+        "Big Five game drives",
+        "Hot air balloon safari",
+        "Maasai village visit",
+        "Sundowners in the savanna"
+      ]
+    }
+  ]
+}
