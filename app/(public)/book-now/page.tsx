@@ -82,7 +82,7 @@ ${formData.message || 'No additional message'}
             <div className="text-6xl mb-4">✅</div>
             <h2 className="text-2xl font-serif font-bold text-green-800 mb-2">Inquiry Sent!</h2>
             <p className="text-green-700 mb-4">
-              Thank you for your interest in Pembe Safaris! We'll get back to you within 24 hours.
+              Thank you for your interest in Pembe Africa Safaris! We'll get back to you within 24 hours.
             </p>
             <button
               onClick={() => setStatus('idle')}

@@ -30,7 +30,7 @@ const Navbar = () => {
               <div className="relative w-12 h-12">
                 <Image
                   src="/logo.svg"
-                  alt="Pembe Safaris Africa"
+                  alt="Pembe Africa Safaris"
                   fill
                   className="object-contain"
                 />
@@ -40,7 +40,7 @@ const Navbar = () => {
               }`}>
                 <div>
                   <div>Pembe</div>
-                  <div className="text-primary">Safaris</div>
+                  <div className="text-primary">Africa Safaris</div>
                 </div>
 
               </span>

@@ -24,7 +24,7 @@ const Testimonials = () => {
       location: 'Singapore',
       image: '/images/testimonials/michael.jpg',
       rating: 5,
-      text: 'Pembe Safaris exceeded all our expectations. From the moment we landed in Nairobi to our final farewell, everything was perfectly organized. The cultural visit to a Maasai village was a highlight we\'ll never forget.',
+      text: 'Pembe Africa Safaris exceeded all our expectations. From the moment we landed in Nairobi to our final farewell, everything was perfectly organized. The cultural visit to a Maasai village was a highlight we\'ll never forget.',
       safari: 'Cultural Safari Experience',
     },
     {

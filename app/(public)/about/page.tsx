@@ -6,11 +6,11 @@ export default function AboutPage() {
     <div className="min-h-screen pt-24">
       <div className="container mx-auto px-4 py-16">
         <h1 className="text-5xl font-serif font-bold mb-8 text-center">
-          About <span className="text-primary">Pembe Safaris</span>
+          About <span className="text-primary">Pembe Africa Safaris</span>
         </h1>
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-lg text-gray-600 mb-6">
-            For over 25 years, Pembe Safaris has been dedicated to providing authentic, 
+            For over 25 years, Pembe Africa Safaris has been dedicated to providing authentic, 
             sustainable, and life-changing safari experiences across Kenya.
           </p>
           <p className="text-lg text-gray-600">

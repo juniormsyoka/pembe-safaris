@@ -14,18 +14,19 @@ export default function Footer() {
             <div className="flex items-center space-x-2 mb-6">
               <div className="relative w-12 h-12">
                 <Image
-                  src="/logo-white.svg"
-                  alt="Pembe Safaris Africa"
+                  src="/logo.svg"
+                  alt="Pembe Africa Safaris"
                   fill
                   className="object-contain"
                 />
               </div>
               <span className="font-serif text-2xl font-bold">
-                Pembe<span className="text-primary">Safaris</span>
+                Pembe <br/>
+                <span className="text-primary"> Africa Safaris</span>
               </span>
             </div>
             <p className="text-gray-400 mb-6 leading-relaxed">
-              Discover the magic of Kenya with Pembe Safaris. We offer authentic safari experiences 
+              Discover the magic of Kenya with Pembe Africa Safaris. We offer authentic safari experiences 
               that combine wildlife adventures with cultural immersion.
             </p>
             <div className="flex space-x-4">
@@ -110,7 +111,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                <span className="text-gray-400">dennikamwathi90@gmail.com</span>
+                <span className="text-gray-400">deniskamwathi@gmail.com</span>
               </li>
             </ul>
           </div>

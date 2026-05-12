@@ -15,11 +15,11 @@ export default function ContactPage() {
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
                 <Mail className="w-6 h-6 text-primary" />
-                <span>info@pembesafaris.com</span>
+                <span>deniskamwathi@gmail.com</span>
               </div>
               <div className="flex items-center space-x-4">
                 <Phone className="w-6 h-6 text-primary" />
-                <span>+254 700 000 000</span>
+                <span>+254 729 436767</span>
               </div>
               <div className="flex items-center space-x-4">
                 <MapPin className="w-6 h-6 text-primary" />

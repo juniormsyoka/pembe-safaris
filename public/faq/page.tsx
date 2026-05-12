@@ -5,7 +5,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 
 const faqs = [
   {
-    question: 'How do I book a safari with Pembe Safaris?',
+    question: 'How do I book a safari with Pembe Africa Safaris?',
     answer: 'You can book directly through our website by filling out the Book Now form, or contact us via email or WhatsApp. Our team will respond within 24 hours to help you plan your perfect safari.',
   },
   {
@@ -54,7 +54,7 @@ export default function FAQPage() {
             Frequently Asked <span className="text-primary">Questions</span>
           </h1>
           <p className="text-gray-600 text-lg">
-            Everything you need to know about planning your safari with Pembe Safaris
+            Everything you need to know about planning your safari with Pembe Africa Safaris
           </p>
         </div>
 

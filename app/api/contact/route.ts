@@ -30,12 +30,12 @@ export async function POST(request: NextRequest) {
       <p>${message.replace(/\n/g, '<br>')}</p>
       
       <hr>
-      <p><small>Sent from Pembe Safaris Africa website</small></p>
+      <p><small>Sent from Pembe Africa Safaris website</small></p>
     `
 
     const { data, error } = await resend.emails.send({
-      from: 'Pembe Safaris <onboarding@resend.dev>',
-      to: [process.env.CONTACT_EMAIL || 'dennikamwathi90@gmail.com'],
+      from: 'Pembe Africa Safaris <onboarding@resend.dev>',
+      to: [process.env.CONTACT_EMAIL || 'deniskamwathi@gmail.com'],
       subject: subjectLine,
       html: emailContent,
       replyTo: email,

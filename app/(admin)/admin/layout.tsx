@@ -19,7 +19,7 @@ function AdminNav() {
     <div className="fixed left-0 top-0 w-64 h-full bg-white shadow-xl z-50 overflow-y-auto">
       <div className="p-6 border-b">
         <h2 className="text-xl font-serif font-bold">
-          Pembe<span className="text-primary">Admin</span>
+          Pembe  <span className="text-primary">Africa Safaris</span><span className="text-primary">Admin</span>
         </h2>
         <p className="text-xs text-gray-500 mt-1">Administration Panel</p>
       </div>
