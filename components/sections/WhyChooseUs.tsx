@@ -51,65 +51,65 @@ const WhyChooseUs = () => {
   ]
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-12 md:py-16 lg:py-24 bg-white">
       <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
           {/* Left Column - Content */}
           <div>
-            <span className="text-primary font-semibold tracking-wider uppercase">
+            <span className="text-primary font-semibold tracking-wider uppercase text-xs md:text-sm">
               Why Choose Us
             </span>
-            <h2 className="section-title mt-2">
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold mt-2 mb-3 md:mb-4">
               Creating Unforgettable
               <span className="gradient-text"> Safari Memories</span>
             </h2>
             
-            <p className="text-lg text-gray-600 mb-8">
+            <p className="text-sm md:text-base text-gray-600 mb-6 md:mb-8">
               For over 25 years, Pembe Africa Safaris has been dedicated to providing authentic, 
               sustainable, and life-changing safari experiences across Kenya. We don't just 
               show you wildlife; we immerse you in the magic of Africa.
             </p>
 
-            {/* Feature List */}
-            <div className="space-y-4 mb-8">
+            {/* Feature List - Mobile: 1 column, Desktop: inline grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8">
               {[
                 'Best price guarantee',
                 'Flexible booking & cancellation',
                 'Sustainable tourism certified',
                 'Emergency support 24/7',
               ].map((item, index) => (
-                <div key={index} className="flex items-center space-x-3">
-                  <CheckCircle className="w-6 h-6 text-primary flex-shrink-0" />
-                  <span className="text-gray-700">{item}</span>
+                <div key={index} className="flex items-center space-x-2 md:space-x-3">
+                  <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-primary flex-shrink-0" />
+                  <span className="text-sm md:text-base text-gray-700">{item}</span>
                 </div>
               ))}
             </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-6">
+            {/* Stats Grid - Mobile: 2 columns */}
+            <div className="grid grid-cols-2 gap-3 md:gap-4 lg:gap-6">
               {stats.map((stat, index) => (
-                <div key={index} className="bg-gray-50 rounded-2xl p-6 text-center">
-                  <div className="text-3xl font-bold text-primary">{stat.value}</div>
-                  <div className="text-sm text-gray-600 mt-2">{stat.label}</div>
+                <div key={index} className="bg-gray-50 rounded-xl md:rounded-2xl p-4 md:p-5 lg:p-6 text-center">
+                  <div className="text-xl md:text-2xl lg:text-3xl font-bold text-primary">{stat.value}</div>
+                  <div className="text-xs md:text-sm text-gray-600 mt-1 md:mt-2">{stat.label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right Column - Features Grid */}
-          <div className="grid grid-cols-2 gap-6">
+          {/* Right Column - Features Grid - Mobile: 1 column, Tablet: 2 columns */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5 lg:gap-6 mt-8 lg:mt-0">
             {features.map((feature, index) => {
               const Icon = feature.icon
               return (
                 <div
                   key={index}
-                  className="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow group"
+                  className="bg-gray-50 rounded-xl md:rounded-2xl p-4 md:p-5 lg:p-6 hover:shadow-lg transition-shadow group active:scale-95"
                 >
-                  <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
-                    <Icon className="w-7 h-7 text-primary group-hover:text-white transition-colors" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-primary/10 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <Icon className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 text-primary group-hover:text-white transition-colors" />
                   </div>
-                  <h3 className="font-serif text-lg font-bold mb-2">{feature.title}</h3>
-                  <p className="text-gray-600 text-sm">{feature.description}</p>
+                  <h3 className="font-serif text-base md:text-lg lg:text-xl font-bold mb-1 md:mb-2">{feature.title}</h3>
+                  <p className="text-gray-600 text-xs md:text-sm">{feature.description}</p>
                 </div>
               )
             })}

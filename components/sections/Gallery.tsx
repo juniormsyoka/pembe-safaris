@@ -3,7 +3,8 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { X, ChevronLeft, ChevronRight, Maximize2, Heart, Camera, Filter } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Maximize2, Heart } from 'lucide-react'
+import { useSwipeable } from 'react-swipeable'
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
@@ -163,36 +164,43 @@ const Gallery = () => {
     )
   }
 
+  // Swipe handlers for mobile
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => handleNextImage(),
+    onSwipedRight: () => handlePrevImage(),
+    trackMouse: false,
+  })
+
   return (
-    <section className="py-24 bg-gray-50">
+    <section className="py-12 md:py-16 lg:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="text-primary font-semibold tracking-wider uppercase">
+        <div className="text-center mb-8 md:mb-12 lg:mb-16">
+          <span className="text-primary font-semibold tracking-wider uppercase text-xs md:text-sm">
             Visual Stories
           </span>
-          <h2 className="section-title">
+          <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold mt-2 mb-3 md:mb-4">
             Safari <span className="gradient-text">Gallery</span>
           </h2>
-          <p className="section-subtitle">
+          <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto px-4">
             Immerse yourself in the beauty of Kenya through our collection of stunning photographs
           </p>
         </div>
 
-        {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        {/* Category Filters - Horizontal scroll on mobile */}
+        <div className="flex flex-nowrap md:flex-wrap overflow-x-auto md:overflow-x-visible justify-start md:justify-center gap-2 md:gap-3 lg:gap-4 mb-8 md:mb-12 pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0">
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setActiveFilter(category.id)}
-              className={`flex items-center space-x-2 px-6 py-3 rounded-full transition-all duration-300 ${
+              className={`flex items-center space-x-1.5 md:space-x-2 px-4 md:px-5 lg:px-6 py-2.5 md:py-3 rounded-full transition-all duration-300 active:scale-95 touch-manipulation whitespace-nowrap ${
                 activeFilter === category.id
                   ? 'bg-primary text-white shadow-lg scale-105'
                   : 'bg-white text-gray-700 hover:bg-gray-100'
               }`}
             >
-              <span>{category.label}</span>
-              <span className={`px-2 py-0.5 rounded-full text-xs ${
+              <span className="text-sm md:text-base">{category.label}</span>
+              <span className={`px-1.5 md:px-2 py-0.5 rounded-full text-xs ${
                 activeFilter === category.id
                   ? 'bg-white text-primary'
                   : 'bg-gray-200 text-gray-600'
@@ -203,12 +211,12 @@ const Gallery = () => {
           ))}
         </div>
 
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* Gallery Grid - Mobile first: 2 columns on mobile, then 3, then 4 */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
           {filteredImages.map((image, index) => (
             <div
               key={image.id}
-              className="group relative aspect-square overflow-hidden rounded-2xl cursor-pointer"
+              className="group relative aspect-square overflow-hidden rounded-xl md:rounded-2xl cursor-pointer active:scale-95 transition-transform"
               onClick={() => setSelectedImage(index)}
             >
               <Image
@@ -216,44 +224,49 @@ const Gallery = () => {
                 alt={image.alt}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               />
               
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <h3 className="font-serif text-xl font-bold mb-1">{image.title}</h3>
-                  <p className="text-sm text-gray-200 mb-2">{image.location}</p>
+                <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 lg:p-6 text-white">
+                  <h3 className="font-serif text-sm md:text-base lg:text-xl font-bold mb-0.5 md:mb-1 line-clamp-1">
+                    {image.title}
+                  </h3>
+                  <p className="text-xs md:text-sm text-gray-200 mb-1 md:mb-2 hidden sm:block">
+                    {image.location}
+                  </p>
                   
                   <div className="flex items-center justify-between">
-                    <span className="text-sm">by {image.photographer}</span>
+                    <span className="text-xs hidden md:inline">by {image.photographer}</span>
                     <button 
                       onClick={(e) => {
                         e.stopPropagation()
                         handleLike(image.id)
                       }}
-                      className="flex items-center space-x-1 text-white hover:text-primary transition-colors"
+                      className="flex items-center space-x-1 text-white hover:text-primary transition-colors active:scale-90"
                     >
-                      <Heart className={`w-5 h-5 ${likedImages.includes(image.id) ? 'fill-red-500 text-red-500' : ''}`} />
-                      <span className="text-sm">{image.likes + (likedImages.includes(image.id) ? 1 : 0)}</span>
+                      <Heart className={`w-4 h-4 md:w-5 md:h-5 ${likedImages.includes(image.id) ? 'fill-red-500 text-red-500' : ''}`} />
+                      <span className="text-xs md:text-sm">{image.likes + (likedImages.includes(image.id) ? 1 : 0)}</span>
                     </button>
                   </div>
                 </div>
               </div>
 
               {/* Category Badge */}
-              <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs capitalize">
+              <div className="absolute top-2 left-2 md:top-3 md:left-3 bg-black/50 backdrop-blur-sm text-white px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-[10px] md:text-xs capitalize">
                 {image.category}
               </div>
 
               {/* Expand Button */}
               <button 
-                className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-2 right-2 md:top-3 md:right-3 bg-black/50 backdrop-blur-sm p-1.5 md:p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity active:scale-90"
                 onClick={(e) => {
                   e.stopPropagation()
                   setSelectedImage(index)
                 }}
               >
-                <Maximize2 className="w-4 h-4 text-white" />
+                <Maximize2 className="w-3 h-3 md:w-4 md:h-4 text-white" />
               </button>
             </div>
           ))}
@@ -261,7 +274,7 @@ const Gallery = () => {
 
         {/* Load More Button */}
         {filteredImages.length > 12 && (
-          <div className="text-center mt-12">
+          <div className="text-center mt-8 md:mt-10 lg:mt-12">
             <button className="btn-secondary !border-primary !text-primary hover:!bg-primary hover:!text-white">
               Load More Photos
             </button>
@@ -278,9 +291,9 @@ const Gallery = () => {
           {/* Close Button */}
           <button
             onClick={() => setSelectedImage(null)}
-            className="absolute top-4 right-4 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+            className="absolute top-2 right-2 md:top-4 md:right-4 z-50 p-2 md:p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors active:scale-90 touch-manipulation"
           >
-            <X className="w-6 h-6 text-white" />
+            <X className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </button>
 
           {/* Navigation Buttons */}
@@ -289,9 +302,9 @@ const Gallery = () => {
               e.stopPropagation()
               handlePrevImage()
             }}
-            className="absolute left-4 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+            className="absolute left-2 md:left-4 z-50 p-2 md:p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors active:scale-90 touch-manipulation"
           >
-            <ChevronLeft className="w-6 h-6 text-white" />
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </button>
 
           <button
@@ -299,15 +312,16 @@ const Gallery = () => {
               e.stopPropagation()
               handleNextImage()
             }}
-            className="absolute right-4 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+            className="absolute right-2 md:right-4 z-50 p-2 md:p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors active:scale-90 touch-manipulation"
           >
-            <ChevronRight className="w-6 h-6 text-white" />
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </button>
 
-          {/* Image Container */}
+          {/* Image Container with Swipe Support */}
           <div 
             className="relative max-w-7xl max-h-[90vh] w-full h-full mx-4"
             onClick={(e) => e.stopPropagation()}
+            {...swipeHandlers}
           >
             <div className="relative w-full h-full">
               <Image
@@ -316,23 +330,24 @@ const Gallery = () => {
                 fill
                 className="object-contain"
                 priority
+                sizes="90vw"
               />
             </div>
 
             {/* Image Info */}
-            <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
+            <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 lg:p-8 bg-gradient-to-t from-black/80 to-transparent">
               <div className="text-white">
-                <h3 className="font-serif text-3xl font-bold mb-2">
+                <h3 className="font-serif text-lg md:text-2xl lg:text-3xl font-bold mb-1 md:mb-2">
                   {filteredImages[selectedImage].title}
                 </h3>
-                <div className="flex flex-wrap items-center gap-4 text-gray-200">
+                <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-gray-200">
                   <span>📍 {filteredImages[selectedImage].location}</span>
                   <span>📷 {filteredImages[selectedImage].photographer}</span>
                   <button 
                     onClick={() => handleLike(filteredImages[selectedImage].id)}
-                    className="flex items-center space-x-1 hover:text-primary transition-colors"
+                    className="flex items-center space-x-1 hover:text-primary transition-colors active:scale-90"
                   >
-                    <Heart className={`w-5 h-5 ${likedImages.includes(filteredImages[selectedImage].id) ? 'fill-red-500 text-red-500' : ''}`} />
+                    <Heart className={`w-4 h-4 md:w-5 md:h-5 ${likedImages.includes(filteredImages[selectedImage].id) ? 'fill-red-500 text-red-500' : ''}`} />
                     <span>{filteredImages[selectedImage].likes + (likedImages.includes(filteredImages[selectedImage].id) ? 1 : 0)} likes</span>
                   </button>
                 </div>
@@ -341,7 +356,7 @@ const Gallery = () => {
           </div>
 
           {/* Image Counter */}
-          <div className="absolute top-4 left-4 text-white bg-black/50 px-4 py-2 rounded-full text-sm">
+          <div className="absolute top-2 left-2 md:top-4 md:left-4 text-white bg-black/50 px-2 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm">
             {selectedImage + 1} / {filteredImages.length}
           </div>
         </div>

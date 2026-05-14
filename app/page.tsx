@@ -17,7 +17,7 @@ async function getFeaturedPackages() {
     .eq('featured', true)
     .eq('active', true)
     .order('created_at', { ascending: false })
-    .limit(4)
+    .limit(5)
   
   if (error) {
     console.error('Error fetching packages:', error)
