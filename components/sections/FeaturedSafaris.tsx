@@ -151,12 +151,12 @@ export default function FeaturedSafaris({ packages }: { packages: SafariPackage[
                         <span className="text-lg md:text-xl lg:text-2xl font-bold text-primary">${safari.price}</span>
                         <span className="text-gray-500 text-xs md:text-sm">/ person</span>
                       </div>
-                      <Link
+                     {/* <Link
                         href={`/safaris/${safari.id}`}
                         className="text-primary font-semibold hover:text-primary/80 transition-colors text-sm md:text-base active:scale-95"
                       >
                         View Details →
-                      </Link>
+                      </Link>*/}
                     </div>
                   </div>
                 </div>
