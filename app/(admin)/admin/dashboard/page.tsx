@@ -7,6 +7,7 @@ import { supabaseAdmin, isAdminClientReady } from '@/lib/supabase/admin'
 import { Package, Plus, Eye, TrendingUp, Calendar, Users, LogOut, DollarSign, Activity } from 'lucide-react'
 import Link from 'next/link'
 import { signOut } from 'next-auth/react'
+import { calculateActiveRevenue, getRevenueBreakdown } from '@/lib/revenue/revenue'
 
 interface DashboardStats {
   totalPackages: number
@@ -32,48 +33,58 @@ function DashboardContent() {
     fetchDashboardStats()
   }, [])
 
+
+
   const fetchDashboardStats = async () => {
-    try {
-      setLoading(true)
-      setError(null)
+      try {
+        setLoading(true)
+        setError(null)
 
-      if (!isAdminClientReady()) {
-        setError('Supabase admin client is not configured')
-        return
+        if (!isAdminClientReady()) {
+          setError('Supabase admin client is not configured')
+          return
+        }
+
+        const { data: packages, error: packagesError } = await supabaseAdmin
+          .from('packages')
+          .select('*')
+
+        if (packagesError) throw packagesError
+
+        const { data: bookings, error: bookingsError } = await supabaseAdmin
+          .from('bookings')
+          .select('*')
+
+        if (bookingsError && !bookingsError.message.includes('does not exist')) {
+          console.warn('Bookings table may not exist yet:', bookingsError)
+        }
+
+        const activePackages = packages?.filter(p => p.active === true).length || 0
+        const featuredPackages = packages?.filter(p => p.featured === true).length || 0
+        
+        // Use the central revenue utility instead of manual calculation
+        const activeRevenue = calculateActiveRevenue(bookings || [])
+        const revenueBreakdown = getRevenueBreakdown(bookings || [])
+
+        setStats({
+          totalPackages: packages?.length || 0,
+          activePackages: activePackages,
+          featuredPackages: featuredPackages,
+          totalBookings: bookings?.length || 0,
+          totalRevenue: activeRevenue, // Now uses active revenue (excludes cancelled)
+        })
+        
+        // Optional: Log the breakdown for debugging
+        console.log('Revenue breakdown:', revenueBreakdown)
+        
+      } catch (err) {
+        console.error('Error fetching dashboard stats:', err)
+        setError(err instanceof Error ? err.message : 'Failed to fetch stats')
+      } finally {
+        setLoading(false)
       }
-
-      const { data: packages, error: packagesError } = await supabaseAdmin
-        .from('packages')
-        .select('*')
-
-      if (packagesError) throw packagesError
-
-      const { data: bookings, error: bookingsError } = await supabaseAdmin
-        .from('bookings')
-        .select('*')
-
-      if (bookingsError && !bookingsError.message.includes('does not exist')) {
-        console.warn('Bookings table may not exist yet:', bookingsError)
-      }
-
-      const activePackages = packages?.filter(p => p.active === true).length || 0
-      const featuredPackages = packages?.filter(p => p.featured === true).length || 0
-      const totalRevenue = bookings?.reduce((sum, b) => sum + (b.total_price || 0), 0) || 0
-
-      setStats({
-        totalPackages: packages?.length || 0,
-        activePackages: activePackages,
-        featuredPackages: featuredPackages,
-        totalBookings: bookings?.length || 0,
-        totalRevenue: totalRevenue,
-      })
-    } catch (err) {
-      console.error('Error fetching dashboard stats:', err)
-      setError(err instanceof Error ? err.message : 'Failed to fetch stats')
-    } finally {
-      setLoading(false)
     }
-  }
+
 
   const statCards = [
     {
@@ -133,9 +144,16 @@ function DashboardContent() {
       href: '/admin/packages',
       gradient: 'from-blue-500 to-blue-600',
     },
+     {
+        title: 'Add New Booking',
+        description: 'Create manual customer bookings, this sends a confirmation email to the customer!',
+        icon: Plus,
+        href: '/admin/bookings/new',
+        gradient: 'from-primary to-primary/80',
+      },
     {
       title: 'View Bookings',
-      description: 'Review and manage customer bookings',
+      description: 'Review and manage existing customer bookings',
       icon: Calendar,
       href: '/admin/bookings',
       gradient: 'from-emerald-500 to-emerald-600',
@@ -200,19 +218,26 @@ function DashboardContent() {
                 Welcome back, {session?.user?.name || session?.user?.email}
               </p>
             </div>
-            {session?.user?.image && (
-              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
-                <img 
-                  src={session.user.image} 
-                  alt="Profile" 
-                  className="w-10 h-10 rounded-full ring-2 ring-white/20"
-                />
-                <div className="text-left">
-                  <p className="text-white text-sm font-medium">{session.user.name}</p>
-                  <p className="text-gray-300 text-xs">{session.user.email}</p>
+            {session?.user && (
+                <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+                  <div className="w-10 h-10 rounded-full ring-2 ring-white/20 bg-primary flex items-center justify-center">
+                    <span className="text-white font-semibold text-sm">
+                      {session.user.name
+                        ? session.user.name
+                            .split(' ')
+                            .map(n => n[0])
+                            .join('')
+                            .toUpperCase()
+                            .slice(0, 2)
+                        : session.user.email?.[0].toUpperCase() || '?'}
+                    </span>
+                  </div>
+                  <div className="text-left">
+                    <p className="text-white text-sm font-medium">{session.user.name}</p>
+                    <p className="text-gray-300 text-xs">{session.user.email}</p>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         </div>
       </div>
@@ -277,7 +302,7 @@ function DashboardContent() {
       {/* Logout Section */}
       <div className="pt-4">
         <button
-          onClick={() => signOut({ callbackUrl: '/admin/login' })}
+          onClick={() => signOut({ callbackUrl: '/admin-login' })}
           className="group w-full flex items-center justify-center gap-3 px-6 py-3.5 bg-gradient-to-r from-red-50 to-red-100 hover:from-red-100 hover:to-red-200 text-red-700 rounded-xl transition-all duration-300 font-medium border border-red-200 hover:shadow-lg"
         >
           <LogOut className="w-5 h-5 transition-transform group-hover:translate-x-1" />

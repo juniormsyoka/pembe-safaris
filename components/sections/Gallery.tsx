@@ -1,7 +1,7 @@
 // components/sections/Gallery.tsx
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Image from 'next/image'
 import { X, ChevronLeft, ChevronRight, Maximize2, Heart } from 'lucide-react'
 import { useSwipeable } from 'react-swipeable'
@@ -135,16 +135,19 @@ const Gallery = () => {
   ]
 
   const categories = [
-    { id: 'all', label: 'All Photos', count: galleryImages.length },
-    { id: 'wildlife', label: 'Wildlife', count: galleryImages.filter(img => img.category === 'wildlife').length },
-    { id: 'landscapes', label: 'Landscapes', count: galleryImages.filter(img => img.category === 'landscapes').length },
-    { id: 'cultural', label: 'Cultural', count: galleryImages.filter(img => img.category === 'cultural').length },
-    { id: 'accommodations', label: 'Accommodations', count: galleryImages.filter(img => img.category === 'accommodations').length },
+    { id: 'all', label: 'All ' },
+    { id: 'wildlife', label: 'Wild'},
+    { id: 'landscapes', label: 'Land' },
+    { id: 'cultural', label: 'Cultural' },
+    { id: 'accommodations', label: 'Stays' },
   ]
 
-  const filteredImages = activeFilter === 'all'
-    ? galleryImages
-    : galleryImages.filter(img => img.category === activeFilter)
+  // Memoized filtered images to prevent unnecessary recalculations
+  const filteredImages = useMemo(() => {
+    return activeFilter === 'all'
+      ? galleryImages
+      : galleryImages.filter(img => img.category === activeFilter)
+  }, [activeFilter])
 
   const handlePrevImage = () => {
     if (selectedImage !== null) {
@@ -188,25 +191,24 @@ const Gallery = () => {
         </div>
 
         {/* Category Filters - Horizontal scroll on mobile */}
-        <div className="flex flex-nowrap md:flex-wrap overflow-x-auto md:overflow-x-visible justify-start md:justify-center gap-2 md:gap-3 lg:gap-4 mb-8 md:mb-12 pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0">
+       <div className="flex flex-nowrap md:flex-wrap overflow-x-auto md:overflow-x-visible justify-start md:justify-center gap-2 md:gap-3 lg:gap-4 mb-8 md:mb-12 pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0">
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setActiveFilter(category.id)}
-              className={`flex items-center space-x-1.5 md:space-x-2 px-4 md:px-5 lg:px-6 py-2.5 md:py-3 rounded-full transition-all duration-300 active:scale-95 touch-manipulation whitespace-nowrap ${
-                activeFilter === category.id
+              className={`
+                px-4 md:px-5 lg:px-6 py-2.5 md:py-3 
+                rounded-full transition-all duration-300 
+                active:scale-95 touch-manipulation whitespace-nowrap
+                text-sm md:text-base font-medium
+                flex items-center justify-center
+                ${activeFilter === category.id
                   ? 'bg-primary text-white shadow-lg scale-105'
                   : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
+                }
+              `}
             >
-              <span className="text-sm md:text-base">{category.label}</span>
-              <span className={`px-1.5 md:px-2 py-0.5 rounded-full text-xs ${
-                activeFilter === category.id
-                  ? 'bg-white text-primary'
-                  : 'bg-gray-200 text-gray-600'
-              }`}>
-                {category.count}
-              </span>
+              {category.label}
             </button>
           ))}
         </div>
@@ -271,15 +273,6 @@ const Gallery = () => {
             </div>
           ))}
         </div>
-
-        {/* Load More Button */}
-        {filteredImages.length > 12 && (
-          <div className="text-center mt-8 md:mt-10 lg:mt-12">
-            <button className="btn-secondary !border-primary !text-primary hover:!bg-primary hover:!text-white">
-              Load More Photos
-            </button>
-          </div>
-        )}
       </div>
 
       {/* Lightbox Modal */}

@@ -65,7 +65,7 @@ const WhyChooseUs = () => {
             </h2>
             
             <p className="text-sm md:text-base text-gray-600 mb-6 md:mb-8">
-              For over 25 years, Pembe Africa Safaris has been dedicated to providing authentic, 
+              For over many years, Pembe Africa Safaris has been dedicated to providing authentic, 
               sustainable, and life-changing safari experiences across Kenya. We don't just 
               show you wildlife; we immerse you in the magic of Africa.
             </p>
