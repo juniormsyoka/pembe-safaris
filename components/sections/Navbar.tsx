@@ -1,4 +1,4 @@
-// components/Navbar.tsx - Optimized Mobile Version
+// components/Navbar.tsx - With class-based background
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -9,6 +9,7 @@ import { Menu, X, ChevronDown } from 'lucide-react'
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +30,12 @@ const Navbar = () => {
       document.body.style.overflow = 'unset'
     }
   }, [isOpen])
+
+  const toggleDropdown = (name: string) => {
+    setOpenDropdown(openDropdown === name ? null : name)
+  }
+
+  const destinations = ['Maasai Mara', 'Amboseli', 'Tsavo', 'Samburu', 'Lake Nakuru']
 
   return (
     <>
@@ -76,7 +83,7 @@ const Navbar = () => {
                 </Link>
               ))}
               
-              {/* Destinations Dropdown */}
+              {/* Destinations Dropdown - Desktop */}
               <div className="relative group">
                 <button className={`flex items-center space-x-1 font-medium py-2 ${
                   scrolled ? 'text-gray-700' : 'text-white'
@@ -86,7 +93,7 @@ const Navbar = () => {
                 </button>
                 
                 <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                  {['Maasai Mara', 'Amboseli', 'Tsavo', 'Samburu', 'Lake Nakuru'].map((dest) => (
+                  {destinations.map((dest) => (
                     <Link
                       key={dest}
                       href={`/destinations/${dest.toLowerCase().replace(' ', '-')}`}
@@ -132,14 +139,23 @@ const Navbar = () => {
           onClick={() => setIsOpen(false)}
         />
         
-        {/* Menu Panel */}
-        <div className={`absolute right-0 top-0 h-full w-full max-w-sm bg-white shadow-2xl transition-transform duration-300 ease-out ${
+        {/* Menu Panel - Using CSS class with !important */}
+        <div className={`absolute right-0 top-0 h-full w-full max-w-sm shadow-2xl transition-transform duration-300 ease-out mobile-menu-panel ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}>
-          <div className="flex flex-col h-full pt-20 pb-6 px-5 overflow-y-auto">
+          {/* Force background with inline style as backup */}
+          <div 
+            className="absolute inset-0 -z-10"
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #fff5eb 100%)',
+              backgroundColor: '#ffffff',
+            }}
+          />
+          
+          <div className="relative flex flex-col h-full pt-20 pb-6 px-5 overflow-y-auto">
             {/* Menu Items - Larger touch targets */}
             <div className="flex flex-col space-y-1">
-              {['Safaris', 'Destinations', 'About', 'Gallery', 'Contact'].map((item) => (
+              {['Safaris', 'About', 'Gallery', 'Contact'].map((item) => (
                 <Link
                   key={item}
                   href={`/${item.toLowerCase()}`}
@@ -149,6 +165,34 @@ const Navbar = () => {
                   {item}
                 </Link>
               ))}
+              
+              {/* Destinations Dropdown - Mobile */}
+              <div className="border-b border-gray-100">
+                <button
+                  onClick={() => toggleDropdown('destinations')}
+                  className="flex items-center justify-between w-full px-4 py-3.5 text-gray-800 text-base font-medium hover:text-primary hover:bg-primary/5 rounded-lg transition-colors active:bg-primary/10"
+                >
+                  <span>Destinations</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${
+                    openDropdown === 'destinations' ? 'rotate-180' : ''
+                  }`} />
+                </button>
+                
+                {openDropdown === 'destinations' && (
+                  <div className="ml-4 pl-2 border-l-2 border-primary/20 space-y-0.5">
+                    {destinations.map((dest) => (
+                      <Link
+                        key={dest}
+                        href={`/destinations/${dest.toLowerCase().replace(' ', '-')}`}
+                        className="block px-4 py-3 text-gray-600 text-sm hover:text-primary hover:bg-primary/5 rounded-lg transition-colors active:bg-primary/10"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {dest}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Book Now Button */}

@@ -1,4 +1,3 @@
-// components/Hero.tsx
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -8,6 +7,7 @@ import { ChevronDown } from 'lucide-react'
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isMounted, setIsMounted] = useState(false)
   
   const slides = [
     {
@@ -28,6 +28,7 @@ const Hero = () => {
   ]
 
   useEffect(() => {
+    setIsMounted(true)
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
     }, 5000)
@@ -48,9 +49,12 @@ const Hero = () => {
             src={slide.image}
             alt={slide.title}
             fill
-            priority
+            priority={index === 0} // Only first slide is priority
             className="object-cover"
             sizes="100vw"
+            quality={80} // Reduced quality for faster loading
+            loading={index === 0 ? 'eager' : 'lazy'} // Lazy load non-visible slides
+            fetchPriority={index === 0 ? 'high' : 'auto'} // Prioritize first slide
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70" />
         </div>
@@ -63,19 +67,15 @@ const Hero = () => {
             ✦✦✦✦✦
           </span>
           
-           
-       
-
-
-        <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-6 leading-[1.1]">
-          <span className="bg-[linear-gradient(135deg,#ffffff_0%,#f5e6d3_25%,#e8c99e_50%,#f5e6d3_75%,#ffffff_100%)] bg-clip-text text-transparent drop-shadow-[0_4px_20px_rgba(0,0,0,0.4)] bg-[length:200%_auto] animate-shine">
-            {slides[currentSlide].title}
-          </span>
-        </h1>
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-6 leading-[1.1]">
+            <span className="bg-[linear-gradient(135deg,#ffffff_0%,#f5e6d3_25%,#e8c99e_50%,#f5e6d3_75%,#ffffff_100%)] bg-clip-text text-transparent drop-shadow-[0_4px_20px_rgba(0,0,0,0.4)] bg-[length:200%_auto] animate-shine">
+              {slides[currentSlide].title}
+            </span>
+          </h1>
           
           <p className="font-serif text-base sm:text-lg md:text-xl lg:text-2xl mb-8 md:mb-12 max-w-3xl mx-auto px-2 italic font-light text-white/85 drop-shadow-lg leading-relaxed">
-  {slides[currentSlide].subtitle}
-</p>
+            {slides[currentSlide].subtitle}
+          </p>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
             <Link href="/safaris" className="btn-primary text-center">
@@ -86,7 +86,7 @@ const Hero = () => {
             </Link>
           </div>
 
-          {/* Stats - Mobile first: 1 column on mobile, 3 on tablet+ */}
+          {/* Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mt-12 sm:mt-16 md:mt-20 max-w-2xl mx-auto">
             {[
               { value: '25+', label: 'Years Experience' },
@@ -117,7 +117,7 @@ const Hero = () => {
           ))}
         </div>
 
-        {/* Scroll Indicator - Hidden on mobile */}
+        {/* Scroll Indicator */}
         <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 hidden lg:block animate-bounce">
           <ChevronDown className="w-6 h-6 md:w-8 md:h-8 text-white" />
         </div>

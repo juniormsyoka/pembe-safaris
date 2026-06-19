@@ -14,7 +14,7 @@ export default function PublicLayout({
       <main className="min-h-screen">
         {children}
       </main>
-      <Footer />
+   
       <WhatsAppButton />
     </>
   )

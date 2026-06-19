@@ -246,3 +246,18 @@ html {
 .animate-slide-up {
   animation: slideUp 0.3s ease-out;
 }
+/* Add this to your globals.css - Mobile menu background override */
+.mobile-menu-panel {
+  background: linear-gradient(135deg, #ffffff 0%, #fff5eb 100%) !important;
+  background-color: #ffffff !important;
+}
+
+.mobile-menu-panel-solid {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+.mobile-menu-panel-orange {
+  background: linear-gradient(135deg, #ffffff 0%, #f97316 100%) !important;
+  background-color: #f97316 !important;
+}

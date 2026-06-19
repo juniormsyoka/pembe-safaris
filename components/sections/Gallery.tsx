@@ -19,8 +19,8 @@ const Gallery = () => {
       category: 'wildlife',
       title: 'King of the Savannah',
       location: 'Maasai Mara',
-      photographer: 'James Wilson',
-      likes: 234,
+      photographer: 'Photography',
+    //  likes: 234,
     },
     {
       id: 2,
@@ -29,7 +29,7 @@ const Gallery = () => {
       category: 'wildlife',
       title: 'Gentle Giants',
       location: 'Amboseli',
-      photographer: 'Sarah Kimani',
+      photographer: 'Photography',
       likes: 189,
     },
     {
@@ -39,7 +39,7 @@ const Gallery = () => {
       category: 'landscapes',
       title: 'Snows of Kilimanjaro',
       location: 'Amboseli',
-      photographer: 'Michael Chen',
+      photographer: 'Photography',
       likes: 156,
     },
     {
@@ -49,7 +49,7 @@ const Gallery = () => {
       category: 'cultural',
       title: 'Traditional Maasai Dance',
       location: 'Maasai Mara',
-      photographer: 'Anna Müller',
+      photographer: 'Photography',
       likes: 278,
     },
     {
@@ -59,7 +59,7 @@ const Gallery = () => {
       category: 'wildlife',
       title: 'Speed in Motion',
       location: 'Serengeti',
-      photographer: 'David Ochieng',
+      photographer: 'Photography',
       likes: 345,
     },
     {
@@ -69,7 +69,7 @@ const Gallery = () => {
       category: 'landscapes',
       title: 'Golden Hour',
       location: 'Tsavo',
-      photographer: 'Emma Watson',
+      photographer: 'Photography',
       likes: 421,
     },
     {
@@ -79,7 +79,7 @@ const Gallery = () => {
       category: 'accommodations',
       title: 'Wilderness Comfort',
       location: 'Laikipia',
-      photographer: 'John Kamau',
+      photographer: 'Photography',
       likes: 167,
     },
     {
@@ -89,7 +89,7 @@ const Gallery = () => {
       category: 'cultural',
       title: 'Daily Life',
       location: 'Samburu',
-      photographer: 'Grace Mwangi',
+      photographer: 'Photography',
       likes: 198,
     },
     {
@@ -99,7 +99,7 @@ const Gallery = () => {
       category: 'wildlife',
       title: 'Towering Beauty',
       location: 'Nairobi National Park',
-      photographer: 'Peter Njoroge',
+      photographer: 'Photography',
       likes: 276,
     },
     {
@@ -109,7 +109,7 @@ const Gallery = () => {
       category: 'landscapes',
       title: 'The Great Crossing',
       location: 'Maasai Mara',
-      photographer: 'Robert Lang',
+      photographer: 'Photography',
       likes: 567,
     },
     {
@@ -119,7 +119,7 @@ const Gallery = () => {
       category: 'accommodations',
       title: 'Under Canvas',
       location: 'Mara North',
-      photographer: 'Lisa Anderson',
+      photographer: 'Photography',
       likes: 145,
     },
     {
@@ -129,7 +129,7 @@ const Gallery = () => {
       category: 'wildlife',
       title: 'Ancient Warrior',
       location: 'Lake Nakuru',
-      photographer: 'Samuel Omondi',
+      photographer: 'Photography',
       likes: 223,
     },
   ]
@@ -241,16 +241,7 @@ const Gallery = () => {
                   
                   <div className="flex items-center justify-between">
                     <span className="text-xs hidden md:inline">by {image.photographer}</span>
-                    <button 
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleLike(image.id)
-                      }}
-                      className="flex items-center space-x-1 text-white hover:text-primary transition-colors active:scale-90"
-                    >
-                      <Heart className={`w-4 h-4 md:w-5 md:h-5 ${likedImages.includes(image.id) ? 'fill-red-500 text-red-500' : ''}`} />
-                      <span className="text-xs md:text-sm">{image.likes + (likedImages.includes(image.id) ? 1 : 0)}</span>
-                    </button>
+                    
                   </div>
                 </div>
               </div>
@@ -334,15 +325,9 @@ const Gallery = () => {
                   {filteredImages[selectedImage].title}
                 </h3>
                 <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-gray-200">
-                  <span>📍 {filteredImages[selectedImage].location}</span>
+                  <span> {filteredImages[selectedImage].location}</span>
                   <span>📷 {filteredImages[selectedImage].photographer}</span>
-                  <button 
-                    onClick={() => handleLike(filteredImages[selectedImage].id)}
-                    className="flex items-center space-x-1 hover:text-primary transition-colors active:scale-90"
-                  >
-                    <Heart className={`w-4 h-4 md:w-5 md:h-5 ${likedImages.includes(filteredImages[selectedImage].id) ? 'fill-red-500 text-red-500' : ''}`} />
-                    <span>{filteredImages[selectedImage].likes + (likedImages.includes(filteredImages[selectedImage].id) ? 1 : 0)} likes</span>
-                  </button>
+                  
                 </div>
               </div>
             </div>
