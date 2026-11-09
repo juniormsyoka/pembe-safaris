@@ -1,120 +1,134 @@
 // components/WhyChooseUs.tsx
-import { 
-  Compass, 
-  Shield, 
-  Users, 
-  Camera, 
-  Leaf, 
-  Heart,
-  CheckCircle 
-} from 'lucide-react'
+'use client'
+
+import Image from 'next/image'
+import { BookOpen, ShieldCheck } from 'lucide-react'
 
 const WhyChooseUs = () => {
-  const features = [
-    {
-      icon: Compass,
-      title: 'Expert Local Guides',
-      description: 'Our guides are born and raised in Kenya, with decades of experience in wildlife conservation and local culture.',
-    },
-    {
-      icon: Shield,
-      title: 'Safety First',
-      description: 'Your safety is our priority with well-maintained vehicles, first-aid trained staff, and 24/7 support.',
-    },
-    {
-      icon: Users,
-      title: 'Small Groups',
-      description: 'Intimate safari experiences with maximum 8 people per vehicle for personalized attention.',
-    },
-    {
-      icon: Camera,
-      title: 'Photography Focused',
-      description: 'Specially designed itineraries for photography enthusiasts with expert guidance.',
-    },
-    {
-      icon: Leaf,
-      title: 'Eco-Conscious',
-      description: 'We practice responsible tourism, supporting conservation and local communities.',
-    },
-    {
-      icon: Heart,
-      title: 'Customized Experiences',
-      description: 'Tailor-made itineraries to match your interests, budget, and travel style.',
-    },
-  ]
-
-  const stats = [
-    { value: '100%', label: 'Local Ownership' },
-    { value: '15+', label: 'Languages Spoken' },
-    { value: '50+', label: 'Community Projects' },
-    { value: '0', label: 'Carbon Footprint' },
-  ]
-
   return (
-    <section className="py-12 md:py-16 lg:py-24 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
-          {/* Left Column - Content */}
-          <div>
-            <span className="text-primary font-semibold tracking-wider uppercase text-xs md:text-sm">
-              Why Choose Us
-            </span>
-            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold mt-2 mb-3 md:mb-4">
-              Creating Unforgettable
-              <span className="gradient-text"> Safari Memories</span>
-            </h2>
+    <section className="py-16 md:py-24 bg-[#FAF2EB] text-[#2A1810]" id="why-choose-us">
+      <div className="max-w-[1240px] mx-auto px-4 md:px-6">
+        
+        {/* Top Feature / Cultural Immersion Showcase */}
+        <div className="relative rounded-[32px] overflow-hidden bg-[#2A1810] text-[#FAF2EB] p-8 md:p-12 lg:p-16 mb-16 md:mb-24 shadow-2xl">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             
-            <p className="text-sm md:text-base text-gray-600 mb-6 md:mb-8">
-              For over many years, Pembe Africa Safaris has been dedicated to providing authentic, 
-              sustainable, and life-changing safari experiences across Kenya. We don't just 
-              show you wildlife; we immerse you in the magic of Africa.
-            </p>
-
-            {/* Feature List - Mobile: 1 column, Desktop: inline grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8">
-              {[
-                'Best price guarantee',
-                'Flexible booking & cancellation',
-                'Sustainable tourism certified',
-                'Emergency support 24/7',
-              ].map((item, index) => (
-                <div key={index} className="flex items-center space-x-2 md:space-x-3">
-                  <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-primary flex-shrink-0" />
-                  <span className="text-sm md:text-base text-gray-700">{item}</span>
-                </div>
-              ))}
+            {/* Left Content */}
+            <div className="z-10">
+              <span className="text-[#C97A2B] font-semibold tracking-widest uppercase text-xs md:text-sm block mb-3">
+                Authentic Heritage
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] mb-6">
+                Discover the Wild Side of Kenya with Pembe Africa Safaris
+              </h2>
+              <p className="text-[#F5E3D2]/80 text-base md:text-lg leading-relaxed font-light">
+                Immerse yourself deep into the heart of Kenya's breathtaking wilderness and rich local traditions, guided by those who call these legendary landscapes home.
+              </p>
             </div>
 
-            {/* Stats Grid - Mobile: 2 columns */}
-            <div className="grid grid-cols-2 gap-3 md:gap-4 lg:gap-6">
-              {stats.map((stat, index) => (
-                <div key={index} className="bg-gray-50 rounded-xl md:rounded-2xl p-4 md:p-5 lg:p-6 text-center">
-                  <div className="text-xl md:text-2xl lg:text-3xl font-bold text-primary">{stat.value}</div>
-                  <div className="text-xs md:text-sm text-gray-600 mt-1 md:mt-2">{stat.label}</div>
+            {/* Right Stacked Polaroid Images */}
+            <div className="relative flex justify-center lg:justify-end items-center">
+              <div className="relative w-full max-w-[420px] h-[280px] sm:h-[320px]">
+                {/* Main Image Card */}
+                <div className="absolute inset-0 rounded-[24px] overflow-hidden shadow-2xl border-4 border-white/90 transform -rotate-2 transition-transform hover:rotate-0 duration-500">
+                  <Image
+                    src="/images/destinations/samburu.jpg"
+                    alt="Cultural safari experience"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-              ))}
+                {/* Secondary Offset Image Card */}
+                <div className="absolute -bottom-6 -left-6 sm:-left-10 w-44 sm:w-56 h-32 sm:h-40 rounded-[20px] overflow-hidden shadow-2xl border-4 border-white/90 transform rotate-6 transition-transform hover:rotate-2 duration-500 hidden sm:block">
+                  <Image
+                    src="/images/destinations/maasai-mara.jpg"
+                    alt="Wildlife scenery"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
             </div>
-          </div>
 
-          {/* Right Column - Features Grid - Mobile: 1 column, Tablet: 2 columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5 lg:gap-6 mt-8 lg:mt-0">
-            {features.map((feature, index) => {
-              const Icon = feature.icon
-              return (
-                <div
-                  key={index}
-                  className="bg-gray-50 rounded-xl md:rounded-2xl p-4 md:p-5 lg:p-6 hover:shadow-lg transition-shadow group active:scale-95"
-                >
-                  <div className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-primary/10 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
-                    <Icon className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 text-primary group-hover:text-white transition-colors" />
-                  </div>
-                  <h3 className="font-serif text-base md:text-lg lg:text-xl font-bold mb-1 md:mb-2">{feature.title}</h3>
-                  <p className="text-gray-600 text-xs md:text-sm">{feature.description}</p>
-                </div>
-              )
-            })}
           </div>
         </div>
+
+        {/* Bottom Split Section: Experience the Wild Wonders + Editorial Polaroid Stack */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          
+          {/* Left Column - Content & Value Pillars */}
+          <div>
+            <span className="text-[#C97A2B] font-semibold tracking-widest uppercase text-xs md:text-sm block mb-2">
+              Why Choose Us
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] mb-6 text-[#2A1810]">
+              Experience the Wild Wonders of Kenya with Pembe Africa Safaris...
+            </h2>
+            
+            <div className="space-y-8 mt-8">
+              {/* Pillar 1 */}
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 rounded-2xl bg-[#F5E3D2] border border-[#C97A2B]/20 flex items-center justify-center flex-shrink-0 text-[#C97A2B]">
+                  <BookOpen className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-xl font-bold mb-2 text-[#2A1810]">
+                    Tailored Safari Adventures
+                  </h3>
+                  <p className="text-[#2A1810]/75 text-sm md:text-base leading-relaxed">
+                    Choose from a selection of personalized safari packages, each designed to fulfill your specific adventure desires, from the breathtaking migrations of Maasai Mara to serene Diani Beach getaways.
+                  </p>
+                </div>
+              </div>
+
+              {/* Pillar 2 */}
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 rounded-2xl bg-[#F5E3D2] border border-[#C97A2B]/20 flex items-center justify-center flex-shrink-0 text-[#C97A2B]">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-xl font-bold mb-2 text-[#2A1810]">
+                    Dedicated, Certified Guides
+                  </h3>
+                  <p className="text-[#2A1810]/75 text-sm md:text-base leading-relaxed">
+                    Rest assured knowing our local guides are certified and committed to making your exploration safe, engaging, and unforgettable, enhanced with rich insights into Kenya's wildlife and culture.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Angled Polaroid Image Stack */}
+          <div className="relative flex justify-center items-center py-8">
+            <div className="relative w-full max-w-[460px] h-[380px] sm:h-[440px]">
+              {/* Back Polariod Card */}
+              <div className="absolute top-0 right-4 w-[75%][height:80%] sm:w-[320px] sm:h-[380px] bg-white p-4 pb-12 rounded-[24px] shadow-xl transform rotate-6 transition-transform duration-500 hover:rotate-3">
+                <div className="relative w-full h-full rounded-[16px] overflow-hidden">
+                  <Image
+                    src="/images/destinations/amboseli.jpg"
+                    alt="Amboseli Kilimanjaro view"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Front Polaroid Card */}
+              <div className="absolute bottom-0 left-4 w-[75%] h-[80%] sm:w-[320px] sm:h-[380px] bg-white p-4 pb-12 rounded-[24px] shadow-2xl transform -rotate-3 transition-transform duration-500 hover:rotate-0 border border-[#2A1810]/10">
+                <div className="relative w-full h-full rounded-[16px] overflow-hidden">
+                  <Image
+                    src="/images/destinations/tsavo.jpg"
+                    alt="Wildlife safari adventure"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </section>
   )

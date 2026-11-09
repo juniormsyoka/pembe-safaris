@@ -8,6 +8,9 @@ import Gallery from '@/components/sections/Gallery'
 import Newsletter from '@/components/sections/Newsletter'
 import { createClientInstance } from '@/lib/supabase/client'
 
+import { getFeaturedPackages } from '@/lib/packages/packages'
+
+/*
 async function getFeaturedPackages() {
   const supabase = createClientInstance()
   
@@ -26,19 +29,20 @@ async function getFeaturedPackages() {
   
   return packages || []
 }
-
+*/
 export default async function Home() {
   const featuredPackages = await getFeaturedPackages()
   
   return (
     <>
       <Hero />
-      <FeaturedSafaris packages={featuredPackages} />
-      <WhyChooseUs />
       <Destinations />
-      <Testimonials />
+      <FeaturedSafaris packages={featuredPackages} />
+      
+      <WhyChooseUs />
+      {/*<Testimonials />*/}
       <Gallery />
-      <Newsletter />
+     {/* <Newsletter />*/}
     </>
   )
 }

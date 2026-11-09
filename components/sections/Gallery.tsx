@@ -1,341 +1,194 @@
-// components/sections/Gallery.tsx
+// components/Gallery.tsx
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
-import { X, ChevronLeft, ChevronRight, Maximize2, Heart } from 'lucide-react'
-import { useSwipeable } from 'react-swipeable'
+import { Sparkles, X } from 'lucide-react'
 
 const Gallery = () => {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null)
   const [activeFilter, setActiveFilter] = useState('all')
-  const [likedImages, setLikedImages] = useState<number[]>([])
+  const [selectedImage, setSelectedImage] = useState<any | null>(null)
 
-  const galleryImages = [
+  const galleryItems = [
     {
       id: 1,
-      src: '/images/gallery/wildlife/lion.jpg',
-      alt: 'Lion in Maasai Mara',
-      category: 'wildlife',
-      title: 'King of the Savannah',
-      location: 'Maasai Mara',
-      photographer: 'Photography',
-    //  likes: 234,
+      title: 'Group Photo at Kimana Gate',
+      category: 'ontour',
+      src: '/images/gallery/Group Photo at Kimana Gate.png',
+      span: 'col-span-1 md:col-span-1 row-span-2',
+      description: 'Our happy guests and local guides arriving at Kimana Gate, Amboseli.',
     },
     {
       id: 2,
-      src: '/images/gallery/wildlife/elephant.jpg',
-      alt: 'Elephant family in Amboseli',
+      title: 'Wildlife Crossing',
       category: 'wildlife',
-      title: 'Gentle Giants',
-      location: 'Amboseli',
-      photographer: 'Photography',
-      likes: 189,
+      src: '/images/gallery/elephants.jpg',
+      span: 'col-span-1 md:col-span-2 row-span-1',
+      description: 'Elephants traversing the sweeping savannah plains.',
     },
     {
       id: 3,
-      src: '/images/gallery/landscapes/kilimanjaro.jpg',
-      alt: 'Mount Kilimanjaro view',
-      category: 'landscapes',
-      title: 'Snows of Kilimanjaro',
-      location: 'Amboseli',
-      photographer: 'Photography',
-      likes: 156,
+      title: 'Zebra Grazing at Sunset',
+      category: 'wildlife',
+      src: '/images/gallery/zebras.jpg',
+      span: 'col-span-1 md:col-span-1 row-span-1',
+      description: 'Zebras grazing under a golden Kenyan sunset backdrop.',
     },
     {
       id: 4,
-      src: '/images/gallery/cultural/maasai.jpg',
-      alt: 'Maasai warriors',
-      category: 'cultural',
-      title: 'Traditional Maasai Dance',
-      location: 'Maasai Mara',
-      photographer: 'Photography',
-      likes: 278,
+      title: 'Safari Cruiser Experience',
+      category: 'ontour',
+      src: '/images/gallery/tours1.jpg',
+      span: 'col-span-1 md:col-span-1 row-span-2',
+      description: 'Immersive safari game drive in our custom 4x4 cruiser.',
     },
     {
       id: 5,
-      src: '/images/gallery/wildlife/cheetah.jpg',
-      alt: 'Cheetah hunting',
+      title: 'Lion Pride Rest',
       category: 'wildlife',
-      title: 'Speed in Motion',
-      location: 'Serengeti',
-      photographer: 'Photography',
-      likes: 345,
+      src: '/images/gallery/lions.jpg',
+      span: 'col-span-1 md:col-span-1 row-span-1',
+      description: 'A peaceful moment with lions resting in the tall grass.',
     },
     {
       id: 6,
-      src: '/images/gallery/landscapes/sunset.jpg',
-      alt: 'African sunset',
-      category: 'landscapes',
-      title: 'Golden Hour',
-      location: 'Tsavo',
-      photographer: 'Photography',
-      likes: 421,
+      title: 'Amboseli Elephants',
+      category: 'wildlife',
+      src: '/images/gallery/elephants3.jpg',
+      span: 'col-span-1 md:col-span-1 row-span-2',
+      description: 'Majestic elephants wandering against open skies.',
     },
     {
       id: 7,
-      src: '/images/gallery/accommodations/lodge.jpg',
-      alt: 'Luxury safari lodge',
-      category: 'accommodations',
-      title: 'Wilderness Comfort',
-      location: 'Laikipia',
-      photographer: 'Photography',
-      likes: 167,
+      title: 'Guide with Cruiser',
+      category: 'ontour',
+      src: '/images/gallery/tours2.jpg',
+      span: 'col-span-1 md:col-span-1 row-span-1',
+      description: 'Our expert local guide ready for the next adventure.',
     },
     {
       id: 8,
-      src: '/images/gallery/cultural/village.jpg',
-      alt: 'Traditional village life',
-      category: 'cultural',
-      title: 'Daily Life',
-      location: 'Samburu',
-      photographer: 'Photography',
-      likes: 198,
-    },
-    {
-      id: 9,
-      src: '/images/gallery/wildlife/giraffe.jpg',
-      alt: 'Giraffe at sunset',
+      title: 'Zebra Herd Dynamics',
       category: 'wildlife',
-      title: 'Towering Beauty',
-      location: 'Nairobi National Park',
-      photographer: 'Photography',
-      likes: 276,
-    },
-    {
-      id: 10,
-      src: '/images/gallery/landscapes/mara-river.jpg',
-      alt: 'Mara River crossing',
-      category: 'landscapes',
-      title: 'The Great Crossing',
-      location: 'Maasai Mara',
-      photographer: 'Photography',
-      likes: 567,
-    },
-    {
-      id: 11,
-      src: '/images/gallery/accommodations/tent.jpg',
-      alt: 'Luxury tented camp',
-      category: 'accommodations',
-      title: 'Under Canvas',
-      location: 'Mara North',
-      photographer: 'Photography',
-      likes: 145,
-    },
-    {
-      id: 12,
-      src: '/images/gallery/wildlife/rhino.jpg',
-      alt: 'White rhino',
-      category: 'wildlife',
-      title: 'Ancient Warrior',
-      location: 'Lake Nakuru',
-      photographer: 'Photography',
-      likes: 223,
+      src: '/images/gallery/zebras again.jpg',
+      span: 'col-span-1 md:col-span-2 row-span-1',
+      description: 'Striking patterns of zebras across the plains.',
     },
   ]
 
-  const categories = [
-    { id: 'all', label: 'All ' },
-    { id: 'wildlife', label: 'Wild'},
-    { id: 'landscapes', label: 'Land' },
-    { id: 'cultural', label: 'Cultural' },
-    { id: 'accommodations', label: 'Stays' },
+  const filters = [
+    { id: 'all', label: 'All Moments' },
+    { id: 'wildlife', label: 'Wildlife & Nature' },
+    { id: 'ontour', label: 'On Tour & Guests' },
   ]
 
-  // Memoized filtered images to prevent unnecessary recalculations
-  const filteredImages = useMemo(() => {
-    return activeFilter === 'all'
-      ? galleryImages
-      : galleryImages.filter(img => img.category === activeFilter)
-  }, [activeFilter])
-
-  const handlePrevImage = () => {
-    if (selectedImage !== null) {
-      setSelectedImage(selectedImage === 0 ? filteredImages.length - 1 : selectedImage - 1)
-    }
-  }
-
-  const handleNextImage = () => {
-    if (selectedImage !== null) {
-      setSelectedImage(selectedImage === filteredImages.length - 1 ? 0 : selectedImage + 1)
-    }
-  }
-
-  const handleLike = (id: number) => {
-    setLikedImages(prev => 
-      prev.includes(id) ? prev.filter(imgId => imgId !== id) : [...prev, id]
-    )
-  }
-
-  // Swipe handlers for mobile
-  const swipeHandlers = useSwipeable({
-    onSwipedLeft: () => handleNextImage(),
-    onSwipedRight: () => handlePrevImage(),
-    trackMouse: false,
-  })
+  const filteredItems = activeFilter === 'all'
+    ? galleryItems
+    : galleryItems.filter((item) => item.category === activeFilter)
 
   return (
-    <section className="py-12 md:py-16 lg:py-24 bg-gray-50">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-8 md:mb-12 lg:mb-16">
-          <span className="text-primary font-semibold tracking-wider uppercase text-xs md:text-sm">
-            Visual Stories
+    <section className="py-16 md:py-24 bg-white text-[#2A1810]" id="gallery">
+      <div className="max-w-[1240px] mx-auto px-4 md:px-6">
+        
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <span className="text-[#C97A2B] font-semibold tracking-widest uppercase text-xs md:text-sm block mb-3">
+            Savannah Moments
           </span>
-          <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold mt-2 mb-3 md:mb-4">
-            Safari <span className="gradient-text">Gallery</span>
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+            Real Stories from the <span className="text-[#C97A2B]">Field</span>
           </h2>
-          <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto px-4">
-            Immerse yourself in the beauty of Kenya through our collection of stunning photographs
+          <p className="text-[#2A1810]/70 text-sm md:text-base">
+            Glimpse into authentic safari experiences, guest memories, and breathtaking wildlife captured across Kenya.
           </p>
         </div>
 
-        {/* Category Filters - Horizontal scroll on mobile */}
-       <div className="flex flex-nowrap md:flex-wrap overflow-x-auto md:overflow-x-visible justify-start md:justify-center gap-2 md:gap-3 lg:gap-4 mb-8 md:mb-12 pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0">
-          {categories.map((category) => (
+        {/* Filter Buttons */}
+        <div className="flex justify-center gap-2 sm:gap-3 mb-12 flex-wrap" role="group" aria-label="Gallery filters">
+          {filters.map((filter) => (
             <button
-              key={category.id}
-              onClick={() => setActiveFilter(category.id)}
-              className={`
-                px-4 md:px-5 lg:px-6 py-2.5 md:py-3 
-                rounded-full transition-all duration-300 
-                active:scale-95 touch-manipulation whitespace-nowrap
-                text-sm md:text-base font-medium
-                flex items-center justify-center
-                ${activeFilter === category.id
-                  ? 'bg-primary text-white shadow-lg scale-105'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-                }
-              `}
+              key={filter.id}
+              onClick={() => setActiveFilter(filter.id)}
+              aria-pressed={activeFilter === filter.id}
+              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 ${
+                activeFilter === filter.id
+                  ? 'bg-[#2A1810] text-[#FAF2EB] shadow-lg scale-105'
+                  : 'bg-[#FAF2EB] text-[#2A1810] hover:bg-[#F5E3D2]'
+              }`}
             >
-              {category.label}
+              {filter.label}
             </button>
           ))}
         </div>
 
-        {/* Gallery Grid - Mobile first: 2 columns on mobile, then 3, then 4 */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
-          {filteredImages.map((image, index) => (
+        {/* Masonry / Asymmetric Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-[280px] gap-6">
+          {filteredItems.map((item) => (
             <div
-              key={image.id}
-              className="group relative aspect-square overflow-hidden rounded-xl md:rounded-2xl cursor-pointer active:scale-95 transition-transform"
-              onClick={() => setSelectedImage(index)}
+              key={item.id}
+              onClick={() => setSelectedImage(item)}
+              className={`group relative rounded-[28px] overflow-hidden shadow-md bg-[#2A1810]/5 cursor-pointer transition-all duration-500 hover:shadow-2xl hover:-translate-y-1.5 ${item.span}`}
             >
               <Image
-                src={image.src}
-                alt={image.alt}
+                src={item.src}
+                alt={item.title}
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 lg:p-6 text-white">
-                  <h3 className="font-serif text-sm md:text-base lg:text-xl font-bold mb-0.5 md:mb-1 line-clamp-1">
-                    {image.title}
-                  </h3>
-                  <p className="text-xs md:text-sm text-gray-200 mb-1 md:mb-2 hidden sm:block">
-                    {image.location}
-                  </p>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs hidden md:inline">by {image.photographer}</span>
-                    
-                  </div>
-                </div>
+              {/* Hover Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1F1109]/90 via-[#1F1109]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-white">
+                <span className="text-xs font-semibold tracking-wider text-[#E5A663] uppercase mb-1">
+                  {item.category === 'wildlife' ? 'Wildlife Moment' : 'Guest Experience'}
+                </span>
+                <h3 className="font-serif text-xl font-bold mb-1">{item.title}</h3>
+                <p className="text-xs text-[#F5E3D2]/80 line-clamp-2">{item.description}</p>
               </div>
-
-              {/* Category Badge */}
-              <div className="absolute top-2 left-2 md:top-3 md:left-3 bg-black/50 backdrop-blur-sm text-white px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-[10px] md:text-xs capitalize">
-                {image.category}
-              </div>
-
-              {/* Expand Button */}
-              <button 
-                className="absolute top-2 right-2 md:top-3 md:right-3 bg-black/50 backdrop-blur-sm p-1.5 md:p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity active:scale-90"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setSelectedImage(index)
-                }}
-              >
-                <Maximize2 className="w-3 h-3 md:w-4 md:h-4 text-white" />
-              </button>
             </div>
           ))}
         </div>
+
       </div>
 
-      {/* Lightbox Modal */}
-      {selectedImage !== null && (
+      {/* Fullscreen Lightbox Modal */}
+      {selectedImage && (
         <div 
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+          className="fixed inset-0 z-50 bg-[#1F1109]/80 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in"
           onClick={() => setSelectedImage(null)}
         >
-          {/* Close Button */}
-          <button
-            onClick={() => setSelectedImage(null)}
-            className="absolute top-2 right-2 md:top-4 md:right-4 z-50 p-2 md:p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors active:scale-90 touch-manipulation"
-          >
-            <X className="w-5 h-5 md:w-6 md:h-6 text-white" />
-          </button>
-
-          {/* Navigation Buttons */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              handlePrevImage()
-            }}
-            className="absolute left-2 md:left-4 z-50 p-2 md:p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors active:scale-90 touch-manipulation"
-          >
-            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white" />
-          </button>
-
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              handleNextImage()
-            }}
-            className="absolute right-2 md:right-4 z-50 p-2 md:p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors active:scale-90 touch-manipulation"
-          >
-            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white" />
-          </button>
-
-          {/* Image Container with Swipe Support */}
           <div 
-            className="relative max-w-7xl max-h-[90vh] w-full h-full mx-4"
+            className="relative max-w-4xl w-full bg-[#FAF2EB] rounded-[32px] overflow-hidden shadow-2xl border border-white/20 p-4 sm:p-6"
             onClick={(e) => e.stopPropagation()}
-            {...swipeHandlers}
           >
-            <div className="relative w-full h-full">
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-6 right-6 z-10 w-10 h-10 rounded-full bg-[#2A1810] text-white flex items-center justify-center transition-transform hover:scale-110"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="relative w-full h-[50vh] sm:h-[60vh] rounded-[20px] overflow-hidden mb-4">
               <Image
-                src={filteredImages[selectedImage].src}
-                alt={filteredImages[selectedImage].alt}
+                src={selectedImage.src}
+                alt={selectedImage.title}
                 fill
-                className="object-contain"
-                priority
-                sizes="90vw"
+                className="object-contain bg-[#1F1109]"
               />
             </div>
 
-            {/* Image Info */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 lg:p-8 bg-gradient-to-t from-black/80 to-transparent">
-              <div className="text-white">
-                <h3 className="font-serif text-lg md:text-2xl lg:text-3xl font-bold mb-1 md:mb-2">
-                  {filteredImages[selectedImage].title}
-                </h3>
-                <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-gray-200">
-                  <span> {filteredImages[selectedImage].location}</span>
-                  <span>📷 {filteredImages[selectedImage].photographer}</span>
-                  
-                </div>
-              </div>
+            <div className="px-2">
+              <span className="text-xs font-semibold tracking-wider text-[#C97A2B] uppercase">
+                {selectedImage.category === 'wildlife' ? 'Wildlife & Nature' : 'On Tour'}
+              </span>
+              <h3 className="font-serif text-2xl font-bold text-[#2A1810] mt-1 mb-2">
+                {selectedImage.title}
+              </h3>
+              <p className="text-[#2A1810]/75 text-sm sm:text-base">
+                {selectedImage.description}
+              </p>
             </div>
-          </div>
-
-          {/* Image Counter */}
-          <div className="absolute top-2 left-2 md:top-4 md:left-4 text-white bg-black/50 px-2 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm">
-            {selectedImage + 1} / {filteredImages.length}
           </div>
         </div>
       )}

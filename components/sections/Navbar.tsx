@@ -70,7 +70,7 @@ const Navbar = () => {
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-              {['Safaris', 'About', 'Gallery', 'Contact'].map((item) => (
+              {['Safaris',/*'About'*/ 'Gallery', 'Contact'].map((item) => (
                 <Link
                   key={item}
                   href={`/${item.toLowerCase()}`}
@@ -155,7 +155,7 @@ const Navbar = () => {
           <div className="relative flex flex-col h-full pt-20 pb-6 px-5 overflow-y-auto">
             {/* Menu Items - Larger touch targets */}
             <div className="flex flex-col space-y-1">
-              {['Safaris', 'About', 'Gallery', 'Contact'].map((item) => (
+              {['Safaris', /*'About'*/ 'Gallery', 'Contact'].map((item) => (
                 <Link
                   key={item}
                   href={`/${item.toLowerCase()}`}

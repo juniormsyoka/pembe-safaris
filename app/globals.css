@@ -5,27 +5,31 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --primary: 24 95% 53%;
-    --primary-foreground: 60 9.1% 97.8%;
-    --secondary: 120 39% 54%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --accent: 43 96% 56%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 24 95% 53%;
-    --radius: 0.5rem;
+    /* Pembe dusk palette — deep earth dominant, amber/gold accents */
+    --background: 24 38% 9%;             /* #1F1109  deep earth  */
+    --foreground: 33 55% 89%;            /* #F5E3D2  warm sand   */
+    --primary: 24 72% 48%;               /* #C97A2B  amber       */
+    --primary-foreground: 24 38% 9%;     /* #1F1109  earth on amber */
+    --secondary: 32 68% 64%;             /* #E5A663  gold        */
+    --secondary-foreground: 24 38% 9%;   /* #1F1109              */
+    --accent: 32 68% 64%;                /* #E5A663  gold        */
+    --accent-foreground: 24 38% 9%;      /* #1F1109              */
+    --destructive: 0 72% 51%;            /* unchanged            */
+    --destructive-foreground: 33 55% 89%;
+    --border: 24 35% 18%;                /* #3E2516  raised earth */
+    --input: 24 35% 18%;                 /* #3E2516              */
+    --ring: 24 72% 48%;                  /* amber focus ring     */
+    --radius: 1.25rem;                   /* Pembe rounded 20–30px */
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --primary: 24 95% 53%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    /* Inverted: light sand mode for users who prefer it */
+    --background: 30 67% 96%;            /* #FAF2EB soft sand */
+    --foreground: 24 41% 11%;            /* #2A1810 earth     */
+    --primary: 24 72% 48%;               /* amber stays       */
+    --primary-foreground: 30 67% 96%;    /* sand on amber     */
+    --border: 33 55% 89%;                /* #F5E3D2           */
+    --input: 33 55% 89%;
   }
 }
 
@@ -48,7 +52,8 @@
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background-color: rgb(0 0 0 / 0.3);
+    /* Slightly warmer/deeper scrim so amber pops on dark earth */
+    background-color: rgb(31 17 9 / 0.45);
     z-index: 10;
   }
 
@@ -60,7 +65,7 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    color: white;
+    color: #f5e3d2;   /* warm sand (was pure white) */
     text-align: center;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -70,13 +75,14 @@
     position: relative;
     overflow: hidden;
     border-radius: 1rem;
-    background-color: white;
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    background-color: #2a1810;   /* earth card surface (was white) */
+    color: #f5e3d2;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.35);
     transition: all 300ms;
   }
 
   .safari-card:hover {
-    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.55);
     transform: translateY(-0.5rem);
   }
 
@@ -96,6 +102,7 @@
     font-size: 2.25rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
+    color: #f5e3d2;   /* sand on dark earth */
   }
 
   @media (min-width: 768px) {
@@ -112,49 +119,50 @@
 
   .section-subtitle {
     font-size: 1.125rem;
-    color: #4b5563;
+    color: #c9b29c;   /* muted sand (was #4b5563 cool grey) */
     max-width: 48rem;
     margin-left: auto;
     margin-right: auto;
   }
 
   .gradient-text {
-    background: linear-gradient(to right, #f97316, #eab308);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
+  background: linear-gradient(to right, #e5a663, #f5e3d2); /* gold → sand */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
   .btn-primary {
-    background-color: #f97316;
-    color: white;
+    background-color: #c97a2b;   /* amber */
+    color: #1f1109;              /* earth text on amber (high contrast) */
     padding: 1rem 2rem;
-    border-radius: 9999px;
+    border-radius: 1rem;         /* Pembe shape, was pill */
     font-weight: 600;
     transition: all 300ms;
     transform: scale(1);
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.35);
   }
 
   .btn-primary:hover {
-    background-color: #f97316 / 0.9;
+    background-color: #e5a663;   /* lift to gold on hover */
+    color: #1f1109;
     transform: scale(1.05);
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.45);
   }
 
   .btn-secondary {
     background-color: transparent;
-    border: 2px solid white;
-    color: white;
+    border: 2px solid #e5a663;   /* gold outline */
+    color: #f5e3d2;              /* sand text */
     padding: 1rem 2rem;
-    border-radius: 9999px;
+    border-radius: 1rem;
     font-weight: 600;
     transition: all 300ms;
   }
 
   .btn-secondary:hover {
-    background-color: white;
-    color: #f97316;
+    background-color: #e5a663;   /* gold fill */
+    color: #1f1109;              /* earth text */
   }
 }
 
@@ -177,22 +185,22 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar — earth track, gold→amber thumb */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #1f1109;           /* deep earth (was #f1f1f1) */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #f97316, #eab308);
+  background: linear-gradient(to bottom, #e5a663, #c97a2b);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #ea580c, #ca8a04);
+  background: linear-gradient(to bottom, #c97a2b, #a35f1f);
 }
 
 /* Line clamp utilities */
@@ -246,18 +254,19 @@ html {
 .animate-slide-up {
   animation: slideUp 0.3s ease-out;
 }
-/* Add this to your globals.css - Mobile menu background override */
+
+/* Mobile menu background overrides — Pembe earth themed */
 .mobile-menu-panel {
-  background: linear-gradient(135deg, #ffffff 0%, #fff5eb 100%) !important;
-  background-color: #ffffff !important;
+  background: linear-gradient(135deg, #2a1810 0%, #1f1109 100%) !important;
+  background-color: #2a1810 !important;
 }
 
 .mobile-menu-panel-solid {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
+  background: #2a1810 !important;
+  background-color: #2a1810 !important;
 }
 
 .mobile-menu-panel-orange {
-  background: linear-gradient(135deg, #ffffff 0%, #f97316 100%) !important;
-  background-color: #f97316 !important;
+  background: linear-gradient(135deg, #2a1810 0%, #c97a2b 100%) !important;
+  background-color: #c97a2b !important;
 }
