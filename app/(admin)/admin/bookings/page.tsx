@@ -8,7 +8,7 @@ import AuthGuard from '@/components/auth/AuthGuard'
 import Link from 'next/link'
 import { Plus, Search, Calendar, Users, DollarSign, ChevronRight, Package } from 'lucide-react'
 import { supabase } from '@/lib/supabase/client'
-import { calculateActiveRevenue } from '@/lib/revenue/revenue'
+//import { calculateActiveRevenue } from '@/lib/revenue/revenue'
 
 interface Booking {
   id: string
@@ -18,7 +18,6 @@ interface Booking {
   customer_phone: string
   number_of_travelers: number
   preferred_date: string
-  total_price: number
   status: string
   created_at: string
   package_id: string
@@ -150,12 +149,7 @@ function BookingsContent() {
                       {booking.number_of_travelers}
                     </div>
                   </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-1 text-sm font-semibold text-primary">
-                      <DollarSign className="w-3 h-3" />
-                      {booking.total_price?.toLocaleString()}
-                    </div>
-                  </td>
+                
                   <td className="px-6 py-4">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getStatusBadge(booking.status)}`}>
                       {booking.status}
@@ -201,17 +195,7 @@ function BookingsContent() {
             {bookings.filter(b => b.status === 'pending').length}
           </p>
         </div>
-       <div className="bg-white rounded-lg p-4 border border-gray-200">
-          <p className="text-sm text-gray-500">Total Revenue</p>
-          <p className="text-2xl font-bold text-primary">
-            ${calculateActiveRevenue(bookings).toLocaleString()}
-          </p>
-          {bookings.some(b => b.status === 'cancelled') && (
-            <p className="text-xs text-red-500 mt-1">
-              (Excludes cancelled bookings)
-            </p>
-          )}
-        </div>
+       
       </div>
     </div>
   )

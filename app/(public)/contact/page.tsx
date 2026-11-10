@@ -2,7 +2,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, Phone, MapPin, Send } from 'lucide-react'
+import { Mail, Phone, MapPin, Send, MessageSquare } from 'lucide-react'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -45,6 +45,8 @@ export default function ContactPage() {
     }
   }
 
+  const whatsappUrl = "https://wa.me/254729436767?text=Hello!%20I'm%20interested%20in%20planning%20a%20safari%20with%20Pembe%20Safaris."
+
   if (status === 'success') {
     return (
       <div className="min-h-screen bg-[#FAF2EB] text-[#2A1810] pt-28 pb-20 flex items-center justify-center px-4">
@@ -82,48 +84,8 @@ export default function ContactPage() {
         
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start">
           
-          {/* Contact Information Card */}
-          <div className="bg-white rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 shadow-[0_10px_30px_rgba(42,24,16,0.06)] border border-[#2A1810]/5">
-            <h2 className="font-serif text-2xl font-bold mb-6 text-[#2A1810]">Direct Reach</h2>
-            <div className="space-y-6">
-              <div className="flex items-center space-x-4">
-                <div className="p-3 rounded-2xl bg-[#FAF2EB] text-[#C97A2B]">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="block text-xs text-[#2A1810]/50 font-medium uppercase tracking-wider">Email Us</span>
-                  <a href="mailto:deniskamwathi@gmail.com" className="text-sm sm:text-base text-[#2A1810] font-semibold hover:text-[#C97A2B] transition-colors">
-                    deniskamwathi@gmail.com
-                  </a>
-                </div>
-              </div>
+        
 
-              <div className="flex items-center space-x-4">
-                <div className="p-3 rounded-2xl bg-[#FAF2EB] text-[#C97A2B]">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="block text-xs text-[#2A1810]/50 font-medium uppercase tracking-wider">Call / WhatsApp</span>
-                  <a href="tel:+254729436767" className="text-sm sm:text-base text-[#2A1810] font-semibold hover:text-[#C97A2B] transition-colors">
-                    +254 729 436767
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-4">
-                <div className="p-3 rounded-2xl bg-[#FAF2EB] text-[#C97A2B]">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="block text-xs text-[#2A1810]/50 font-medium uppercase tracking-wider">Location</span>
-                  <span className="text-sm sm:text-base text-[#2A1810] font-semibold">
-                    Nairobi, Kenya
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
           {/* Working Contact Form Card */}
           <div className="bg-white rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 shadow-[0_10px_30px_rgba(42,24,16,0.06)] border border-[#2A1810]/5">
             <h2 className="font-serif text-2xl font-bold mb-6 text-[#2A1810]">Send a Message</h2>
@@ -184,6 +146,26 @@ export default function ContactPage() {
                   </>
                 )}
               </button>
+
+              {/* Form WhatsApp Divider & Button */}
+              <div className="pt-3">
+                <div className="relative flex items-center justify-center mb-4">
+                  <div className="border-t border-[#2A1810]/10 w-full" />
+                  <span className="bg-white px-3 text-[11px] uppercase tracking-widest text-[#2A1810]/50 font-semibold absolute">
+                    or
+                  </span>
+                </div>
+
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-3.5 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 text-sm active:scale-95 shadow-sm"
+                >
+                  <MessageSquare className="w-4 h-4 fill-current" />
+                  Chat Directly on WhatsApp
+                </a>
+              </div>
             </form>
           </div>
 

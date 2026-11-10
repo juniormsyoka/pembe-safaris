@@ -14,9 +14,9 @@ interface SafariPackage {
   id: string
   title: string
   location: string
-  duration: string
+  //duration: string
   group_size: string
-  price: number
+  //price: number
   rating: number
   reviews_count: number
   main_image: string
@@ -146,10 +146,10 @@ export default function FeaturedSafaris({ packages }: { packages: SafariPackage[
                         <MapPin className="w-3.5 h-3.5 mr-1.5 text-[#C97A2B] flex-shrink-0" />
                         <span className="line-clamp-1">{safari.location}</span>
                       </div>
-                      <div className="flex items-center">
+                     {/* <div className="flex items-center">
                         <Clock className="w-3.5 h-3.5 mr-1.5 text-[#C97A2B] flex-shrink-0" />
                         <span>{safari.duration}</span>
-                      </div>
+                      </div>*/}
                       <div className="flex items-center">
                         <Users className="w-3.5 h-3.5 mr-1.5 text-[#C97A2B] flex-shrink-0" />
                         <span>{safari.group_size}</span>
@@ -158,14 +158,13 @@ export default function FeaturedSafaris({ packages }: { packages: SafariPackage[
 
                     {/* Price row */}
                     <div className="flex items-end justify-between pt-3 border-t border-[#2A1810]/10 mt-auto">
-                      <div>
-                        <span className="font-serif text-xl sm:text-2xl font-bold text-[#C97A2B]">
-                          ${safari.price}
-                        </span>
-                        <span className="text-[#2A1810]/55 text-xs sm:text-sm ml-1">
-                          / person
-                        </span>
-                      </div>
+                      <Link 
+                          href="/contact?subject=Quotation%20Inquiry"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#C97A2B]/10 hover:bg-[#C97A2B] text-[#C97A2B] hover:text-[#FAF2EB] transition-all duration-300 font-semibold text-xs sm:text-sm border border-[#C97A2B]/20 shadow-sm active:scale-95 group"
+                        >
+                          <span className="tracking-wide">Get Quotation</span>
+                          <span className="group-hover:translate-x-0.5 transition-transform duration-200">→</span>
+                        </Link>
                     </div>
                   </div>
                 </article>
