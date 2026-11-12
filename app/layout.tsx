@@ -20,6 +20,10 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: 'Pembe Africa Safaris - Authentic Kenyan Safari Experiences',
   description: 'Discover the magic of Kenya with Pembe Africa Safaris. Expert-guided wildlife adventures, luxury camping, and cultural experiences in Africa\'s most stunning landscapes.',
+  icons: {
+    icon: '/icon.png',
+    apple: '/icon.png',
+  },
 }
 
 export default function RootLayout({
@@ -34,7 +38,7 @@ export default function RootLayout({
     "name": "Pembe Africa Safaris",
     "url": "https://pembeafricasafaris.com",
     // IMPORTANT: Update this URL to your actual logo path (e.g., /logo.png or /images/logo.png)
-    "logo": "https://pembeafricasafaris.com/logo.png", 
+    "logo": "https://pembeafricasafaris.com/icon.png", 
     "description": "Discover the magic of Kenya with Pembe Africa Safaris. Expert-guided wildlife adventures, luxury camping, and cultural experiences in Africa's most stunning landscapes.",
     "contactPoint": {
       "@type": "ContactPoint",
