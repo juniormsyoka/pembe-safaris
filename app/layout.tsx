@@ -2,10 +2,7 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
-import Navbar from '@/components/sections/Navbar'
-import Footer from '@/components/sections/Footer'
 import SessionProviderWrapper from '@/components/providers/SessionProviderWrapper'
-import WhatsAppButton from '@/components/ui/WhatsAppButton'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -57,12 +54,7 @@ export default function RootLayout({
         />
         
         <SessionProviderWrapper> 
-          <Navbar />
-          <main className="min-h-screen">
-            {children}
-          </main>
-          <Footer />
-          <WhatsAppButton />
+          {children}
         </SessionProviderWrapper> 
       </body>
     </html>

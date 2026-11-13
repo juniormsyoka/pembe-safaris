@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
+import { requireAdmin } from '@/lib/auth/admin'
 
 export async function GET(request: NextRequest) {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   try {
     // Fetch packages from Supabase
     const { data, error } = await supabaseAdmin
@@ -22,6 +26,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   try {
     const body = await request.json()
     
@@ -42,7 +49,6 @@ export async function POST(request: NextRequest) {
         location: body.location,
         duration: body.duration,
         group_size: body.group_size,
-        price: parseFloat(body.price),
         description: body.description,
         main_image: body.main_image,
         badge: body.badge || null,

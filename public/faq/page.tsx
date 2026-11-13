@@ -2,14 +2,15 @@
 
 import { useState } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
+import { getWhatsAppEnquiryLink } from '@/lib/contact'
 
 const faqs = [
   {
     question: 'How do I book a safari with Pembe Africa Safaris?',
-    answer: 'You can book directly through our website by filling out the Book Now form, or contact us via email or WhatsApp. Our team will respond within 24 hours to help you plan your perfect safari.',
+    answer: 'Get in touch with our team via WhatsApp, email, or the contact form and we will plan your safari personally. We respond within 24 hours with a tailored itinerary and quote.',
   },
   {
-    question: 'What is included in the safari package price?',
+    question: 'What is included in the safari package cost?',
     answer: 'Our packages typically include: accommodation, game drives in 4x4 vehicles, park entrance fees, professional English-speaking guide, bottled water during safaris, and airport transfers. Meals are included as specified in each package.',
   },
   {
@@ -90,7 +91,7 @@ export default function FAQPage() {
         <div className="mt-12 text-center p-8 bg-primary/10 rounded-2xl">
           <p className="text-gray-700 mb-4">Still have questions?</p>
           <a
-            href="https://wa.me/254729436767"
+            href={getWhatsAppEnquiryLink()}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors"

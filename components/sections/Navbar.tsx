@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Menu, X, ChevronDown } from 'lucide-react'
+import { getWhatsAppEnquiryLink } from '@/lib/contact'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -105,12 +106,14 @@ const Navbar = () => {
                 </div>
               </div>
 
-              <Link
-                href="/book-now"
+              <a
+                href={getWhatsAppEnquiryLink()}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-primary !py-2.5 !px-5 text-sm"
               >
-                Book Your Safari
-              </Link>
+                Enquire on WhatsApp
+              </a>
             </div>
 
             {/* Mobile Menu Button - Larger touch area */}
@@ -195,15 +198,17 @@ const Navbar = () => {
               </div>
             </div>
 
-            {/* Book Now Button */}
+            {/* WhatsApp Enquiry Button */}
             <div className="mt-auto pt-6 border-t border-gray-200">
-              <Link
-                href="/book-now"
+              <a
+                href={getWhatsAppEnquiryLink()}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block w-full btn-primary text-center py-3.5 text-base active:scale-95 transition-transform"
                 onClick={() => setIsOpen(false)}
               >
-                Book Your Safari
-              </Link>
+                Enquire on WhatsApp
+              </a>
             </div>
           </div>
         </div>

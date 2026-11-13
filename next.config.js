@@ -9,14 +9,22 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'images.unsplash.com',
+        pathname: '/**',
       },
       {
         protocol: 'https',
         hostname: '**.pembesafaris.com',
+        pathname: '/**',
       },
       {
         protocol: 'https',
-        hostname: 'i.imgur.com', // ✅ add Imgur support
+        hostname: 'i.imgur.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'encrypted-tbn0.gstatic.com', // ✅ Google encrypted thumbnails
+        pathname: '/**',
       },
     ],
     formats: ['image/avif', 'image/webp'],

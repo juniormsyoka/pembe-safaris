@@ -11,7 +11,6 @@ export async function createPackage(formData: FormData) {
     const location = formData.get('location') as string
     const duration = formData.get('duration') as string
     const group_size = formData.get('group_size') as string
-    const price = parseFloat(formData.get('price') as string)
     const description = formData.get('description') as string
     const main_image = formData.get('main_image') as string
     const badge = formData.get('badge') as string
@@ -47,7 +46,6 @@ export async function createPackage(formData: FormData) {
         location,
         duration,
         group_size,
-        price,
         description,
         main_image,
         badge: badge || null,

@@ -1,17 +1,34 @@
 // app/(routes)/contact/page.tsx
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Mail, Phone, MapPin, Send, MessageSquare } from 'lucide-react'
+import { getWhatsAppEnquiryLink } from '@/lib/contact'
 
-export default function ContactPage() {
+function humanizePackageSlug(slug: string) {
+  return slug
+    .split('-')
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+
+function ContactFormContent() {
+  const searchParams = useSearchParams()
+  const packageParam = searchParams.get('package') || ''
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    package: humanizePackageSlug(packageParam),
     message: '',
   })
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
+
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, package: humanizePackageSlug(packageParam) }))
+  }, [packageParam])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -26,14 +43,16 @@ export default function ContactPage() {
           type: 'contact',
           name: formData.name,
           email: formData.email,
-          subject: 'Contact Form Inquiry',
-          message: formData.message,
+          subject: formData.package ? `Package Inquiry: ${formData.package}` : 'Contact Form Inquiry',
+          message: formData.package
+            ? `Package of interest: ${formData.package}\n\n${formData.message}`
+            : formData.message,
         }),
       })
 
       if (response.ok) {
         setStatus('success')
-        setFormData({ name: '', email: '', message: '' })
+        setFormData({ name: '', email: '', package: '', message: '' })
       } else {
         const error = await response.json()
         setErrorMessage(error.error || 'Failed to send message')
@@ -45,7 +64,7 @@ export default function ContactPage() {
     }
   }
 
-  const whatsappUrl = "https://wa.me/254729436767?text=Hello!%20I'm%20interested%20in%20planning%20a%20safari%20with%20Pembe%20Safaris."
+  const whatsappUrl = getWhatsAppEnquiryLink(formData.package || undefined)
 
   if (status === 'success') {
     return (
@@ -115,6 +134,17 @@ export default function ContactPage() {
               </div>
 
               <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-[#2A1810]/70 mb-2">Safari of Interest</label>
+                <input 
+                  type="text" 
+                  placeholder="e.g. Maasai Mara Explorer"
+                  value={formData.package}
+                  onChange={(e) => setFormData({ ...formData, package: e.target.value })}
+                  className="w-full px-4 py-3 bg-[#FAF2EB]/40 border border-[#2A1810]/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#C97A2B] text-sm text-[#2A1810]"
+                />
+              </div>
+
+              <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-[#2A1810]/70 mb-2">Your Message *</label>
                 <textarea 
                   rows={4}
@@ -172,5 +202,13 @@ export default function ContactPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ContactPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#FAF2EB]" />}>
+      <ContactFormContent />
+    </Suspense>
   )
 }

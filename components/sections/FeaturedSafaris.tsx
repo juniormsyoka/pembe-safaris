@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Clock, Users, MapPin, Star, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Autoplay, A11y } from 'swiper/modules'
+import { getContactUrl, getWhatsAppEnquiryLink } from '@/lib/contact'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -16,7 +17,6 @@ interface SafariPackage {
   location: string
   //duration: string
   group_size: string
-  //price: number
   rating: number
   reviews_count: number
   main_image: string
@@ -156,15 +156,22 @@ export default function FeaturedSafaris({ packages }: { packages: SafariPackage[
                       </div>
                     </div>
 
-                    {/* Price row */}
-                    <div className="flex items-end justify-between pt-3 border-t border-[#2A1810]/10 mt-auto">
-                      <Link 
-                          href="/contact?subject=Quotation%20Inquiry"
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#C97A2B]/10 hover:bg-[#C97A2B] text-[#C97A2B] hover:text-[#FAF2EB] transition-all duration-300 font-semibold text-xs sm:text-sm border border-[#C97A2B]/20 shadow-sm active:scale-95 group"
-                        >
-                          <span className="tracking-wide">Get Quotation</span>
-                          <span className="group-hover:translate-x-0.5 transition-transform duration-200">→</span>
-                        </Link>
+                    {/* Enquiry actions */}
+                    <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-[#2A1810]/10 mt-auto">
+                      <a
+                        href={getWhatsAppEnquiryLink(safari.title)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#C97A2B]/10 hover:bg-[#C97A2B] text-[#C97A2B] hover:text-[#FAF2EB] transition-all duration-300 font-semibold text-xs sm:text-sm border border-[#C97A2B]/20 shadow-sm active:scale-95"
+                      >
+                        <span className="tracking-wide">Enquire on WhatsApp</span>
+                      </a>
+                      <Link
+                        href={getContactUrl(safari.slug)}
+                        className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#2A1810]/70 hover:text-[#C97A2B] transition-colors"
+                      >
+                        Send a message
+                      </Link>
                     </div>
                   </div>
                 </article>

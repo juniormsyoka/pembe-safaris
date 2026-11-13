@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { MapPin, Camera, Clock, Star, CheckCircle, ChevronRight, ArrowLeft } from 'lucide-react'
+import { getContactUrl, getWhatsAppEnquiryLink } from '@/lib/contact'
 
 // Destination data
 const destinationsData: Record<string, {
@@ -243,12 +244,14 @@ export default async function DestinationPage({ params }: { params: { slug: stri
               <span>Best: {destination.bestTime.split('(')[0].trim()}</span>
             </div>
           </div>
-          <Link
-            href="/book-now"
-            className="w-full sm:w-auto text-center bg-[#2A1810] text-[#FAF2EB] px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#C97A2B] transition-all duration-300 shadow-md active:scale-95"
+          <a
+            href={getWhatsAppEnquiryLink(destination.name)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto text-center bg-[#C97A2B] text-[#FAF2EB] px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#b06521] transition-all duration-300 shadow-md active:scale-95"
           >
-            Book This Destination →
-          </Link>
+            Enquire on WhatsApp →
+          </a>
         </div>
 
         {/* Description */}
@@ -320,14 +323,24 @@ export default async function DestinationPage({ params }: { params: { slug: stri
         </div>
 
         {/* Final CTA */}
-        <div className="text-center">
-          <Link
-            href="/book-now"
+        <div className="text-center space-y-3">
+          <a
+            href={getWhatsAppEnquiryLink(destination.name)}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 bg-[#C97A2B] text-[#FAF2EB] px-8 py-4 rounded-full font-semibold hover:bg-[#2A1810] transition-colors text-sm sm:text-base shadow-lg active:scale-95"
           >
             Plan Your Visit to {destination.name.split(' ')[0]}
             <ChevronRight className="w-5 h-5" />
-          </Link>
+          </a>
+          <div>
+            <Link
+              href={getContactUrl(slug)}
+              className="text-sm font-semibold text-[#2A1810]/70 hover:text-[#C97A2B] transition-colors"
+            >
+              Send a message
+            </Link>
+          </div>
         </div>
       </div>
     </div>

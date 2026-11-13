@@ -2,26 +2,24 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { supabaseAdmin } from '@/lib/supabase/admin';
 import { Upload, X, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 
 interface ImageUploadProps {
   onUploadComplete: (url: string) => void;
   currentImage?: string;
-  folder?: string;
 }
 
-export default function ImageUpload({ onUploadComplete, currentImage, folder = 'packages' }: ImageUploadProps) {
+export default function ImageUpload({ onUploadComplete, currentImage }: ImageUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState<string | null>(currentImage || null);
   const [error, setError] = useState<string | null>(null);
 
   const uploadImage = useCallback(async (file: File) => {
     // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
     if (!allowedTypes.includes(file.type)) {
-      setError('Only JPEG, PNG, WEBP, and GIF images are allowed');
+      setError('Only JPEG, PNG, and WEBP images are allowed');
       return;
     }
 
@@ -35,25 +33,20 @@ export default function ImageUpload({ onUploadComplete, currentImage, folder = '
     setError(null);
 
     try {
-      // Create unique filename
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
-      const filePath = `${folder}/${fileName}`;
+      const formData = new FormData();
+      formData.append('file', file);
 
-      // Upload to Supabase
-      const { error: uploadError } = await supabaseAdmin.storage
-        .from('safari-images')
-        .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: false
-        });
+      const response = await fetch('/api/admin/uploads', {
+        method: 'POST',
+        body: formData,
+      });
 
-      if (uploadError) throw uploadError;
+      if (!response.ok) {
+        const body = await response.json().catch(() => null);
+        throw new Error(body?.error || 'Failed to upload image');
+      }
 
-      // Get public URL
-      const { data: { publicUrl } } = supabaseAdmin.storage
-        .from('safari-images')
-        .getPublicUrl(filePath);
+      const { publicUrl } = await response.json();
 
       setPreview(publicUrl);
       onUploadComplete(publicUrl);
@@ -63,7 +56,7 @@ export default function ImageUpload({ onUploadComplete, currentImage, folder = '
     } finally {
       setUploading(false);
     }
-  }, [folder, onUploadComplete]);
+  }, [onUploadComplete]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

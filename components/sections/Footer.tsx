@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { MapPin, Phone, Mail } from 'lucide-react'
+import { getWhatsAppEnquiryLink } from '@/lib/contact'
 
 const currentYear = new Date().getFullYear()
 
@@ -53,7 +54,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://wa.me/254729436767"
+                  href={getWhatsAppEnquiryLink()}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block text-[#F5E3D2]/80 hover:text-[#C97A2B] transition-colors text-sm py-2 active:text-[#C97A2B] active:scale-95 touch-manipulation"
@@ -83,8 +84,11 @@ export default function Footer() {
               </li>
               <li className="flex items-center justify-center md:justify-start gap-3">
                 <Mail className="w-4 h-4 md:w-5 md:h-5 text-[#C97A2B] flex-shrink-0" />
-                <a href="mailto:deniskamwathi@gmail.com" className="text-[#F5E3D2]/80 hover:text-[#C97A2B] text-sm transition-colors break-words py-1">
-                  deniskamwathi@gmail.com
+               <a 
+                  href="mailto:hello@pembeafricasafaris.com?subject=Safari%20Inquiry%20-%20Pembe%20Africa%20Safaris&body=Hello%20Pembe%20Africa%20Safaris%20Team,%0A%0AI%20am%20interested%20in%20booking%20a%20safari%20and%20would%20like%20more%20details.%0A%0A[Your%20Message%20Here]%0A%0AThank%20you!" 
+                  className="text-[#F5E3D2]/80 hover:text-[#C97A2B] text-sm transition-colors break-words py-1"
+                >
+                  hello@pembeafricasafaris.com
                 </a>
               </li>
             </ul>
@@ -100,7 +104,7 @@ export default function Footer() {
           {/* Added flex-wrap to prevent overflow on tiny screens */}
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6 order-1 md:order-2">
             <a
-              href="https://wa.me/254729436767"
+              href={getWhatsAppEnquiryLink()}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-[#C97A2B] transition-colors py-2 px-1 active:text-[#C97A2B] active:scale-95 touch-manipulation"

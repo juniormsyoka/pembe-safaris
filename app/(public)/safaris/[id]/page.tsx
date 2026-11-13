@@ -4,6 +4,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { MapPin, Users, Star, Clock, CheckCircle, ArrowLeft } from 'lucide-react'
+import { getContactUrl, getWhatsAppEnquiryLink } from '@/lib/contact'
+import { getApprovedReviewsForPackage } from '@/lib/reviews/reviews'
+
+export const revalidate = 60
 
 // Helper function to get package by ID
 async function getPackageById(id: string) {
@@ -27,6 +31,8 @@ export default async function SafariDetailPage({ params }: { params: { id: strin
   if (!safari) {
     notFound()
   }
+
+  const reviews = await getApprovedReviewsForPackage(safari.id)
 
   return (
     <div className="min-h-screen bg-[#FAF2EB] text-[#2A1810] pb-24">
@@ -173,16 +179,53 @@ export default async function SafariDetailPage({ params }: { params: { id: strin
                 </div>
               </div>
             )}
+
+            {/* Traveler Reviews */}
+            {reviews.length > 0 && (
+              <div className="bg-white rounded-[24px] sm:rounded-[30px] p-6 sm:p-8 shadow-[0_10px_30px_rgba(42,24,16,0.06)]">
+                <h2 className="text-2xl font-serif font-bold mb-6 text-[#2A1810]">Traveler Reviews</h2>
+                <div className="space-y-4">
+                  {reviews.map((review, index) => (
+                    <div
+                      key={`${review.created_at}-${index}`}
+                      className="rounded-2xl border border-[#2A1810]/10 bg-[#FAF2EB]/40 p-4 sm:p-5"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                        <p className="font-semibold text-[#2A1810]">
+                          {review.display_name || 'Safari guest'}
+                        </p>
+                        <div className="flex gap-0.5" aria-label={`${review.rating} out of 5 stars`}>
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`w-3.5 h-3.5 ${i < review.rating ? 'text-[#C97A2B] fill-current' : 'text-gray-200'}`}
+                              aria-hidden="true"
+                            />
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-[#2A1810]/75 text-sm leading-relaxed">{review.content}</p>
+                      <p className="text-[#2A1810]/45 text-xs mt-2">
+                        {new Date(review.created_at).toLocaleDateString(undefined, {
+                          year: 'numeric',
+                          month: 'long',
+                        })}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Sticky Booking Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-[28px] sm:rounded-[32px] shadow-[0_18px_40px_rgba(42,24,16,0.1)] p-6 sm:p-8 sticky top-28 border border-[#2A1810]/5">
               <div className="text-center mb-6 pb-6 border-b border-[#2A1810]/10">
-                <div className="font-serif text-3xl sm:text-4xl font-bold text-[#C97A2B]">
-                  ${safari.price}
+                <div className="font-serif text-2xl sm:text-3xl font-bold text-[#C97A2B]">
+                  Tailored quote
                 </div>
-                <div className="text-xs sm:text-sm text-[#2A1810]/60 mt-1">per person</div>
+                <div className="text-xs sm:text-sm text-[#2A1810]/60 mt-1">Pricing is arranged personally for your trip</div>
               </div>
 
               <div className="space-y-3.5 mb-6 text-sm">
@@ -208,18 +251,20 @@ export default async function SafariDetailPage({ params }: { params: { id: strin
                 )}
               </div>
 
-              <Link
-                href={`/book-now?package=${safari.id}`}
-                className="block w-full bg-[#2A1810] text-[#FAF2EB] text-center py-3.5 sm:py-4 rounded-2xl font-semibold hover:bg-[#C97A2B] transition-all duration-300 mb-3 shadow-md text-sm sm:text-base tracking-wide active:scale-95"
+              <a
+                href={getWhatsAppEnquiryLink(safari.title)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full bg-[#C97A2B] text-[#FAF2EB] text-center py-3.5 sm:py-4 rounded-2xl font-semibold hover:bg-[#b06521] transition-all duration-300 mb-3 shadow-md text-sm sm:text-base tracking-wide active:scale-95"
               >
-                Book This Safari
-              </Link>
+                Enquire on WhatsApp
+              </a>
 
               <Link
-                href="/contact"
+                href={getContactUrl(safari.slug || safari.id)}
                 className="block w-full border-2 border-[#2A1810]/20 text-[#2A1810] text-center py-3.5 sm:py-4 rounded-2xl font-semibold hover:bg-[#FAF2EB] transition-colors text-sm sm:text-base active:scale-95"
               >
-                Ask a Question
+                Send a message
               </Link>
 
             </div>

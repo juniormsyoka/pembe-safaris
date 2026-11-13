@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
+import { getWhatsAppEnquiryLink } from '@/lib/contact'
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -91,12 +92,14 @@ const Hero = () => {
             >
               Explore Safaris
             </Link>
-            <Link 
-              href="/contact" 
+            <a 
+              href={getWhatsAppEnquiryLink()}
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-white/10 backdrop-blur-md text-[#FAF2EB] px-8 py-3.5 rounded-full font-semibold hover:bg-white/20 border border-white/30 transition-all duration-300 active:scale-95 text-sm sm:text-base inline-block"
             >
-              Contact Us
-            </Link>
+              Enquire on WhatsApp
+            </a>
           </div>
 
           {/* Stats */}

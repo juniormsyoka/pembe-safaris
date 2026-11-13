@@ -6,9 +6,10 @@ import Destinations from '@/components/sections/Destinations'
 import Testimonials from '@/components/sections/Testimonials'
 import Gallery from '@/components/sections/Gallery'
 import Newsletter from '@/components/sections/Newsletter'
-import { createClientInstance } from '@/lib/supabase/client'
 
 import { getFeaturedPackages } from '@/lib/packages/packages'
+
+export const revalidate = 60
 
 /*
 async function getFeaturedPackages() {
@@ -40,7 +41,7 @@ export default async function Home() {
       <FeaturedSafaris packages={featuredPackages} />
       
       <WhyChooseUs />
-      {/*<Testimonials />*/}
+      <Testimonials />
       <Gallery />
      {/* <Newsletter />*/}
     </>

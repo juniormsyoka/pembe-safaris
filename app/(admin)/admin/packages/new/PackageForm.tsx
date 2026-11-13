@@ -22,7 +22,6 @@ export default function AddPackagePage() {
     location: '',
     group_size: '',
     featured: true, // Hardcoded to true as requested
-    price: null, // Optional field, can be null
   })
 
   // --- FILE UPLOAD HANDLER ---

@@ -3,6 +3,7 @@ import { supabase } from '@/lib/supabase/client'
 import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin, Clock, Users, Star } from 'lucide-react'
+import { getContactUrl, getWhatsAppEnquiryLink } from '@/lib/contact'
 
 async function getAllPackages() {
   const { data: packages, error } = await supabase
@@ -116,14 +117,9 @@ export default async function SafarisPage() {
                   {pkg.description}
                 </p>
 
-                {/* Price & Rating */}
-                <div className="flex items-center justify-between mb-6 pt-4 border-t border-[#2A1810]/10 mt-auto">
-                  <div>
-                    <span className="font-serif text-2xl font-bold text-[#C97A2B]">
-                      ${parseFloat(pkg.price).toLocaleString()}
-                    </span>
-                    <span className="text-[#2A1810]/55 text-xs"> / person</span>
-                  </div>
+                {/* Quote & Rating */}
+                <div className="flex items-center justify-between mb-4 pt-4 border-t border-[#2A1810]/10 mt-auto">
+                  <span className="text-sm font-semibold text-[#2A1810]/70">Tailored quote</span>
                   
                   {parseFloat(pkg.rating) > 0 && (
                     <div className="flex items-center gap-1 bg-[#FAF2EB] px-2.5 py-1 rounded-full text-xs font-semibold text-[#2A1810]">
@@ -134,13 +130,30 @@ export default async function SafarisPage() {
                   )}
                 </div>
 
-                {/* View Details Button */}
-                <Link
-                  href={`/safaris/${pkg.id}`}
-                  className="block w-full text-center bg-[#2A1810] text-[#FAF2EB] py-3 rounded-2xl font-semibold hover:bg-[#C97A2B] transition-colors duration-300 text-sm tracking-wide"
-                >
-                  View Details
-                </Link>
+                <div className="space-y-2">
+                  <a
+                    href={getWhatsAppEnquiryLink(pkg.title)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full text-center bg-[#C97A2B] text-[#FAF2EB] py-3 rounded-2xl font-semibold hover:bg-[#b06521] transition-colors duration-300 text-sm tracking-wide"
+                  >
+                    Enquire on WhatsApp
+                  </a>
+                  <div className="flex gap-2">
+                    <Link
+                      href={`/safaris/${pkg.id}`}
+                      className="flex-1 text-center border border-[#2A1810]/20 text-[#2A1810] py-2.5 rounded-2xl font-semibold hover:bg-[#2A1810] hover:text-[#FAF2EB] transition-colors duration-300 text-xs sm:text-sm"
+                    >
+                      View Details
+                    </Link>
+                    <Link
+                      href={getContactUrl(pkg.slug || pkg.id)}
+                      className="flex-1 text-center border border-[#2A1810]/20 text-[#2A1810] py-2.5 rounded-2xl font-semibold hover:bg-[#FAF2EB] transition-colors duration-300 text-xs sm:text-sm"
+                    >
+                      Send a message
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
