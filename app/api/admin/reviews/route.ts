@@ -170,7 +170,7 @@ export async function POST(request: NextRequest) {
     }
 
     // TEMP diagnostic — remove once the 500 is fixed.
-    console.log('INSERT reviews payload:', insertPayload)
+    //console.log('INSERT reviews payload:', insertPayload)
 
     const { data, error } = await supabaseAdmin
       .from('reviews')
@@ -178,7 +178,7 @@ export async function POST(request: NextRequest) {
       .select('*')
       .single()
 
-    if (error) {
+    /*if (error) {
       // TEMP diagnostic — remove once the 500 is fixed.
       console.error('Supabase insert error:', {
         message: error.message,
@@ -187,7 +187,7 @@ export async function POST(request: NextRequest) {
         hint: error.hint,
       })
       throw error
-    }
+    }*/
 
     return NextResponse.json(toAdminReview(data, request), { status: 201 })
   } catch (error) {

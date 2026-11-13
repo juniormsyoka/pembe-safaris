@@ -18,7 +18,7 @@ export default function AdminLayout({
               href="/admin/dashboard"
               className="whitespace-nowrap font-serif text-base font-bold tracking-wide sm:text-lg"
             >
-              Pembe Admin
+              PembeAfricaSafaris: Admin
             </Link>
             <nav
               aria-label="Admin"
