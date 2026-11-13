@@ -46,6 +46,15 @@ export default async function Testimonials() {
             </div>
           ))}
         </div>
+
+        <div className="text-center mt-10">
+          <a
+            href="/review"
+            className="inline-block px-6 py-3 rounded-full bg-[#C97A2B] text-white font-semibold hover:bg-[#b06a24] transition"
+          >
+            Read all reviews
+          </a>
+        </div>
       </div>
     </section>
   )

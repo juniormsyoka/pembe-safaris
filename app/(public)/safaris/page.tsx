@@ -1,12 +1,13 @@
 // app/(public)/safaris/page.tsx
-import { supabase } from '@/lib/supabase/client'
+//import { supabase } from '@/lib/supabase/client'
+import { supabaseAdmin } from '@/lib/supabase/admin'
 import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin, Clock, Users, Star } from 'lucide-react'
 import { getContactUrl, getWhatsAppEnquiryLink } from '@/lib/contact'
 
 async function getAllPackages() {
-  const { data: packages, error } = await supabase
+  const { data: packages, error } = await supabaseAdmin
     .from('packages')
     .select('*')
     .eq('active', true)

@@ -1,23 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 import AuthGuard from '@/components/auth/AuthGuard'
-
-const ADMIN_LINKS = [
-  { href: '/admin/dashboard', label: 'Dashboard' },
-  { href: '/admin/packages', label: 'Packages' },
-  { href: '/admin/reviews', label: 'Reviews' },
-]
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const pathname = usePathname()
-
   return (
     <AuthGuard>
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -33,23 +24,6 @@ export default function AdminLayout({
               aria-label="Admin"
               className="flex items-center gap-1 overflow-x-auto sm:gap-2"
             >
-              {ADMIN_LINKS.map((link) => {
-                const active = pathname === link.href || pathname.startsWith(`${link.href}/`)
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    aria-current={active ? 'page' : undefined}
-                    className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E5A663] sm:text-sm ${
-                      active
-                        ? 'bg-[#C97A2B] text-[#FAF2EB]'
-                        : 'text-[#F5E3D2]/80 hover:bg-white/10 hover:text-[#FAF2EB]'
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                )
-              })}
               <button
                 type="button"
                 onClick={() => signOut({ callbackUrl: '/admin-login' })}
