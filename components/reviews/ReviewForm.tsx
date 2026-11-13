@@ -103,7 +103,7 @@ export default function ReviewForm({ token, defaultDisplayName }: ReviewFormProp
           </div>
           <h1 className="font-serif text-3xl font-bold text-[#FAF2EB] mb-2">Asante sana!</h1>
           <p className="text-sm text-[#FAF2EB]/60 leading-relaxed">
-            Your review has been submitted and is pending approval. We can&apos;t wait to share your story.
+            Your review has been submitted. We can&apos;t wait to share your story.
           </p>
         </div>
       </div>
